@@ -19,11 +19,10 @@ from db.session import SessionLocal
 from fetch_historical_financials import (
     DEFAULT_EXCHANGE,
     FULL_YEAR_PERIOD,
-    QUARTER_LABELS,
     fetch_all_symbols,
     fetch_historical_financials,
 )
-from financial_metrics import _xbrl_filename, resolve_period_date
+from financial_metrics import _xbrl_filename, fy_year_and_quarter, resolve_period_date
 from gdfl import GDFLClient
 
 load_dotenv()
@@ -357,7 +356,8 @@ def store_detailed_financials_for_symbol(
 
                 is_annual = period == FULL_YEAR_PERIOD
                 frequency = "annual" if is_annual else "quarterly"
-                stored_period = "" if is_annual else QUARTER_LABELS.get(period, period)
+                fy_year, quarter = fy_year_and_quarter(date)
+                stored_period = "" if is_annual else quarter
 
                 for metric_name, value in metrics.items():
                     upsert_detailed_metric(
@@ -370,7 +370,7 @@ def store_detailed_financials_for_symbol(
                         period=stored_period,
                         metric_name=metric_name,
                         metric_value=value,
-                        year=year,
+                        year=fy_year,
                     )
                     written += 1
     return written

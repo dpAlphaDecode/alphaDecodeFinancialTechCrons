@@ -4,10 +4,13 @@ Flow) for every symbol in the `symbols` DB table from GDFL's Fundamental
 Data REST API (see gdfl/client.py -- GetFinancialResults).
 
 Fetches exactly the (FY-start year, period) combos in
-STATEMENT_YEAR_PERIODS, which vary by statement type -- currently ProfitLoss
-fetches FY2026-27 QM (Q4), FY2026-27 QJ (Q1), and FY2025-26 M12 (full year),
-while BalanceSheet and CashFlow only fetch FY2025-26 M12. GDFL's `year` param
-is the FY-start calendar year (e.g. year=2025 means FY2025-2026, April-March).
+STATEMENT_YEAR_PERIODS, which vary by statement type -- currently covering
+FY2021-22 through the 1st quarter of FY2026-27: ProfitLoss fetches the full
+year (M12) plus all four quarters for every FY from 2021-22 through 2025-26,
+then FY2026-27 QJ (Q1) only; BalanceSheet and CashFlow fetch just the full
+year (M12) for every FY from 2021-22 through 2025-26, then FY2026-27 QJ (Q1)
+only. GDFL's `year` param is the FY-start calendar year (e.g. year=2025 means
+FY2025-2026, April-March).
 
 For each statement/year/period this fetches both Consolidated and Standalone
 filings; when mapping to headline metrics, Consolidated takes priority and
@@ -30,7 +33,7 @@ from dotenv import load_dotenv
 
 from db.models.symbol import Symbol
 from db.session import SessionLocal
-from financial_metrics import extract_metrics_with_priority, resolve_period_date, store_financials
+from financial_metrics import extract_metrics_with_priority, fy_year_and_quarter, resolve_period_date, store_financials
 from gdfl import GDFLAPIError, GDFLClient
 
 load_dotenv()
@@ -42,16 +45,25 @@ FULL_YEAR_PERIOD = "M12"
 DEFAULT_EXCHANGE = "BSE"
 
 # Restrict historical fetches to exactly these (FY-start year, period)
-# combos, per statement type -- currently ProfitLoss covers FY2026-27 QM
-# (Q4), FY2026-27 QJ (Q1), and FY2025-26 M12 (full year); BalanceSheet and
-# CashFlow only cover FY2025-26 M12, since those don't need quarterly
-# tracking the way P&L does. Widen a statement type's list or pass an
-# explicit `year_periods_by_statement=` to fetch_historical_financials() to
-# cover more.
+# combos, per statement type -- FY2021-22 through the 1st quarter of
+# FY2026-27. ProfitLoss covers the full year (M12) plus all four quarters
+# for every FY from 2021-22 through 2025-26, then FY2026-27 QJ (Q1) only;
+# BalanceSheet and CashFlow only cover the full year (M12) for every FY from
+# 2021-22 through 2025-26, then FY2026-27 QJ (Q1) only, since those don't
+# need quarterly tracking the way P&L does. Widen a statement type's list or
+# pass an explicit `year_periods_by_statement=` to fetch_historical_financials()
+# to cover more.
+HISTORICAL_START_YEAR = 2021  # FY2021-22
+LAST_FULL_YEAR = 2025  # FY2025-26 -- the last FY with a full year filed
+CURRENT_YEAR = 2026  # FY2026-27 -- only Q1 (QJ) filed so far
+_FULL_YEARS = range(HISTORICAL_START_YEAR, LAST_FULL_YEAR + 1)
+
 STATEMENT_YEAR_PERIODS: dict[str, list[tuple[int, str]]] = {
-    "ProfitLoss": [(2026, "QM"), (2026, "QJ"), (2025, "M12")],
-    "BalanceSheet": [(2025, "M12")],
-    "CashFlow": [(2025, "M12")],
+    "ProfitLoss": [
+        (year, period) for year in _FULL_YEARS for period in (FULL_YEAR_PERIOD, *TRAILING_YEAR_PERIODS)
+    ] + [(CURRENT_YEAR, "QJ")],
+    "BalanceSheet": [(year, FULL_YEAR_PERIOD) for year in _FULL_YEARS] + [(CURRENT_YEAR, "QJ")],
+    "CashFlow": [(year, FULL_YEAR_PERIOD) for year in _FULL_YEARS] + [(CURRENT_YEAR, "QJ")],
 }
 
 # GDFL quarter code -> Indian financial quarter label stored in `financials.period`.
@@ -153,7 +165,8 @@ def store_financials_for_symbol(
 
                 is_annual = period == FULL_YEAR_PERIOD
                 frequency = "annual" if is_annual else "quarterly"
-                stored_period = "" if is_annual else QUARTER_LABELS.get(period, period)
+                fy_year, quarter = fy_year_and_quarter(date)
+                stored_period = "" if is_annual else quarter
                 written += store_financials(
                     db,
                     symbol_id,
@@ -162,7 +175,7 @@ def store_financials_for_symbol(
                     date,
                     frequency=frequency,
                     period=stored_period,
-                    year=year,
+                    year=fy_year,
                 )
     return written
 

@@ -242,6 +242,28 @@ def resolve_period_date(consolidated_items: list[dict] | None, standalone_items:
     return None
 
 
+def fy_year_and_quarter(date: _dt.date) -> tuple[int, str]:
+    """
+    Indian FY runs April-March. Derives (FY-start year, quarter label) from
+    a period-end date alone, e.g. 2022-03-31 -> (2021, "Q4"),
+    2021-12-31 -> (2021, "Q3"), 2021-06-30 -> (2021, "Q1").
+
+    This is the source of truth for the `year`/`period` columns in
+    financials/pnl_financials/balance_sheet_financials/cashflow_financials:
+    the GDFL request's `year=`/`period=` are only a lookup key for what to
+    ask for, and can't be trusted to describe what filing actually came
+    back, so `year`/`period` are always derived from the resolved
+    DateOfEndOfReportingPeriod (`date`) instead of the request params.
+    """
+    if date.month <= 3:
+        return date.year - 1, "Q4"
+    if date.month <= 6:
+        return date.year, "Q1"
+    if date.month <= 9:
+        return date.year, "Q2"
+    return date.year, "Q3"
+
+
 def extract_metrics_with_priority(
     consolidated_items: list[dict] | None,
     standalone_items: list[dict] | None,

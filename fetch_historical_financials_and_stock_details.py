@@ -43,11 +43,16 @@ from db.models.symbol import Symbol
 from db.session import SessionLocal
 from fetch_historical_financials import (
     DEFAULT_EXCHANGE,
+    FULL_YEAR_PERIOD,
+    QUARTER_LABELS,
+    STATEMENT_TYPES,
+    STATEMENT_YEAR_PERIODS,
     fetch_all_symbols,
     fetch_historical_financials,
     store_financials_for_symbol,
 )
 from fetch_historical_financial_stock_details import (
+    STATEMENT_TABLE_CONFIG,
     load_metric_mappings,
     store_detailed_financials_for_symbol,
 )
@@ -80,6 +85,61 @@ def save_progress(index: int, total: int, symbol: str) -> None:
             f,
             indent=2,
         )
+
+
+def _stored_period_key(period: str) -> tuple[str, str]:
+    """(frequency, stored period label) that a (year, period) combo would be saved under."""
+    if period == FULL_YEAR_PERIOD:
+        return "annual", ""
+    return "quarterly", QUARTER_LABELS.get(period, period)
+
+
+def missing_year_periods_for_symbol(
+    db, symbol_id: int
+) -> dict[str, list[tuple[int, str]]]:
+    """
+    For each statement type, the (FY-start year, period) combos from
+    STATEMENT_YEAR_PERIODS that this symbol doesn't already have a
+    metric_name row for in the corresponding detailed table
+    (pnl_financials/balance_sheet_financials/cashflow_financials).
+
+    Checking here -- before calling the API at all -- means a combo already
+    stored from a previous run is never re-fetched, which is what keeps
+    re-running this script over the widened FY2021-22..FY2026-27 Q1 range
+    from blowing through GDFL's request-rate cap.
+    """
+    missing: dict[str, list[tuple[int, str]]] = {}
+    for stmt_type in STATEMENT_TYPES:
+        year_periods = STATEMENT_YEAR_PERIODS.get(stmt_type, [])
+        if not year_periods:
+            missing[stmt_type] = []
+            continue
+
+        model = STATEMENT_TABLE_CONFIG[stmt_type]
+        # NOTE: model.statement_type is *not* "ProfitLoss"/"BalanceSheet"/"CashFlow"
+        # -- each of these three tables is already dedicated to one statement
+        # type, so that column is repurposed to store the report nature
+        # ("consolidated"/"standalone", see upsert_detailed_metric()). No
+        # extra filter is needed here: the model class alone already scopes
+        # this query to the right statement type.
+        years = {year for year, _ in year_periods}
+        rows = (
+            db.query(model.year, model.frequency, model.period)
+            .filter(
+                model.symbol_id == symbol_id,
+                model.year.in_(years),
+            )
+            .distinct()
+            .all()
+        )
+        stored = {(row.year, row.frequency, row.period or "") for row in rows}
+
+        missing[stmt_type] = [
+            (year, period)
+            for year, period in year_periods
+            if (year, *_stored_period_key(period)) not in stored
+        ]
+    return missing
 
 
 def prompt_start_index(default_index: int) -> int:
@@ -170,7 +230,15 @@ def main():
                 save_progress(idx, total, symbol)
                 continue
 
-            data = fetch_historical_financials(symbol, exchange=exchange, client=client)
+            year_periods_by_statement = missing_year_periods_for_symbol(db, symbol_id)
+            if not any(year_periods_by_statement.values()):
+                print("  already have every metric for this symbol's date range, skipping API call")
+                save_progress(idx, total, symbol)
+                continue
+
+            data = fetch_historical_financials(
+                symbol, exchange=exchange, client=client, year_periods_by_statement=year_periods_by_statement
+            )
 
             if args.json_dir:
                 out_path = os.path.join(args.json_dir, f"{symbol}.json")

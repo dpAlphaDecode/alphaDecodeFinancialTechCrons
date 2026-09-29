@@ -30,7 +30,7 @@ from gdfl.exceptions import GDFLAPIError
 
 DEFAULT_BASE_URL = "https://nimblerest.lisuns.com:4532/"
 MAX_INSTRUMENTS_PER_REQUEST = 25
-DEFAULT_RATE_LIMIT_PER_HOUR = 1800
+DEFAULT_RATE_LIMIT_PER_HOUR = 5400
 
 _DateLike = str | _dt.date
 
@@ -110,7 +110,7 @@ class GDFLClient:
         # GDFL enforces a 1800 requests/hour cap on this key; pass
         # rate_limit_per_hour=None to disable (e.g. in tests with a mocked session).
         self._rate_limiter = (
-            _RateLimiter(max_calls=rate_limit_per_hour, period=3600.0)
+            _RateLimiter(max_calls=rate_limit_per_hour, period=5400.0)
             if rate_limit_per_hour
             else None
         )
