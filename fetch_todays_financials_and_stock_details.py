@@ -34,6 +34,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as _dt
+import logging
 import time
 
 from dotenv import load_dotenv
@@ -48,8 +49,11 @@ from fetch_historical_financial_stock_details import (
 from fetch_results_calendar import IST
 from fetch_todays_financials import fetch_due_calendar_targets, fetch_due_financials, resolve_run_date
 from gdfl import GDFLClient
+from logging_setup import configure_logging
 
 load_dotenv()
+
+logger = logging.getLogger(__name__)
 
 
 def _mark_calendar_fetched(db, symbol_id: int, run_date: _dt.date, data: dict) -> None:
@@ -103,7 +107,7 @@ def run(
     load_metric_mappings()  # fail fast if Detailed_page_keys.xlsx is missing/malformed, before hitting the API
 
     targets, _ = fetch_due_calendar_targets(db, run_date, symbols_filter, only_unfetched=only_unfetched)
-    print(f"{len(targets)} symbol(s) have a financial_calendar entry due {run_date}.")
+    logger.info("%s symbol(s) have a financial_calendar entry due %s.", len(targets), run_date)
 
     summary = {
         "run_date": str(run_date),
@@ -121,7 +125,7 @@ def run(
     for idx, (symbol_id, entry) in enumerate(targets.items(), start=1):
         symbol = entry["symbol"]
         combos = entry["combos"]
-        print(f"[{idx}/{total}] Fetching {symbol} ({len(combos)} combo(s) due today)...")
+        logger.info("[%s/%s] Fetching %s (%s combo(s) due today)...", idx, total, symbol, len(combos))
 
         data = fetch_due_financials(symbol, exchange, combos, client)
 
@@ -129,9 +133,9 @@ def run(
         written_detailed = store_detailed_financials_for_symbol(db, symbol_id, symbol, data, rejected_symbols)
         _mark_calendar_fetched(db, symbol_id, run_date, data)
         db.commit()
-        print(
-            f"  stored/updated {written_financials} financials row(s), "
-            f"{written_detailed} detailed metric row(s)"
+        logger.info(
+            "stored/updated %s financials row(s), %s detailed metric row(s)",
+            written_financials, written_detailed,
         )
 
         summary["symbols_processed"] += 1
@@ -143,10 +147,9 @@ def run(
 
     if rejected_symbols:
         summary["rejected"] = rejected_symbols
-        print("\n===== Symbols with unresolved data =====")
         for symbol, reasons in rejected_symbols.items():
             for reason in reasons:
-                print(f"  {symbol}: {reason}")
+                logger.warning("%s: %s", symbol, reason)
 
     return summary
 
@@ -170,6 +173,7 @@ def main():
     )
     args = parser.parse_args()
 
+    configure_logging("fetch_todays_financials_and_stock_details")
     run_date = resolve_run_date(args.date)
     symbols_filter = {s.strip() for s in args.symbols.split(",") if s.strip()} if args.symbols else None
 

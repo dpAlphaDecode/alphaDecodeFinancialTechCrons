@@ -220,4 +220,14 @@ __marimo__/
 
 # Fetch/upload job resume/progress state
 .*_progress.json
+
+# Rotating log files written by logging_setup.configure_logging()
+logs/
+
+# Local data dumps / generated exports -- not meant to be committed
+# (upload_data_from_files/data_13_april_2026 is already covered by the bare
+# "data_13_april_2026" pattern above, under the IPython section)
+/data/
+bhavcopy_symbols.xlsx
+bhavcopy_symbols_1.xlsx
 .env

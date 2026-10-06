@@ -41,6 +41,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as _dt
+import logging
 
 import pandas as pd
 
@@ -49,8 +50,11 @@ from dotenv import load_dotenv
 from db.models.symbol import Symbol
 from db.session import SessionLocal
 from gdfl import GDFLAPIError, GDFLClient
+from logging_setup import configure_logging
 
 load_dotenv()
+
+logger = logging.getLogger(__name__)
 
 DEFAULT_EXCHANGE = "BSE"
 DEFAULT_OUTPUT = "bhavcopy_cm_symbols.xlsx"
@@ -152,32 +156,33 @@ def main():
     args = parser.parse_args()
     date = _dt.datetime.strptime(args.date, "%Y-%m-%d").date()
 
+    configure_logging("fetch_bhavcopy_cm_symbols")
     db = SessionLocal()
     try:
         existing_isins = fetch_existing_isins(db)
     finally:
         db.close()
-    print(f"{len(existing_isins)} ISIN(s) already present in the symbols table.")
+    logger.info("%s ISIN(s) already present in the symbols table.", len(existing_isins))
 
     client = GDFLClient()
-    print(f"Fetching GetBhavCopyCM for {args.exchange}, date={date}...")
+    logger.info("Fetching GetBhavCopyCM for %s, date=%s...", args.exchange, date)
     try:
         rows = fetch_bhavcopy_rows(args.exchange, date, client)
-    except GDFLAPIError as exc:
-        print(f"GetBhavCopyCM failed: {exc}")
+    except GDFLAPIError:
+        logger.exception("GetBhavCopyCM failed")
         raise SystemExit(1)
 
-    print(f"Fetched {len(rows)} bhavcopy row(s) total.")
+    logger.info("Fetched %s bhavcopy row(s) total.", len(rows))
 
     records = build_symbol_rows(rows, args.exchange)
-    print(f"{len(records)} row(s) matched series/ISIN prefix after dedup.")
+    logger.info("%s row(s) matched series/ISIN prefix after dedup.", len(records))
 
     # records = [r for r in records if r["symbol"] not in existing_isins]
-    print(f"{len(records)} row(s) remain after removing ISINs already in the symbols table.")
+    logger.info("%s row(s) remain after removing ISINs already in the symbols table.", len(records))
 
     df = pd.DataFrame(records, columns=OUTPUT_COLUMNS)
     df.to_excel(args.output, index=False)
-    print(f"Wrote {len(df)} rows to {args.output}")
+    logger.info("Wrote %s rows to %s", len(df), args.output)
 
 
 if __name__ == "__main__":

@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as _dt
+import logging
 
 from dotenv import load_dotenv
 
@@ -31,8 +32,11 @@ from db.models.financials import Financial
 from db.models.pnl_financials import PnlFinancial
 from db.session import SessionLocal
 from financial_metrics import fy_year_and_quarter
+from logging_setup import configure_logging
 
 load_dotenv()
+
+logger = logging.getLogger(__name__)
 
 MODELS = [Financial, PnlFinancial, BalanceSheetFinancial, CashflowFinancial]
 
@@ -78,12 +82,13 @@ def main():
 
     since = _dt.datetime.strptime(args.since, "%Y-%m-%d")
 
+    configure_logging("fix_financials_year_quarter")
     db = SessionLocal()
     try:
         for model in MODELS:
             checked, fixed = fix_model(db, model, since, args.dry_run)
             verb = "would fix" if args.dry_run else "fixed"
-            print(f"{model.__tablename__}: checked {checked} row(s) updated since {args.since}, {verb} {fixed}")
+            logger.info("%s: checked %s row(s) updated since %s, %s %s", model.__tablename__, checked, args.since, verb, fixed)
     finally:
         db.close()
 

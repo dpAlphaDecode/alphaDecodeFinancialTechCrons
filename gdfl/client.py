@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import collections
 import datetime as _dt
+import logging
 import os
 import threading
 import time
@@ -28,9 +29,40 @@ import requests
 
 from gdfl.exceptions import GDFLAPIError
 
+logger = logging.getLogger(__name__)
+
 DEFAULT_BASE_URL = "https://nimblerest.lisuns.com:4532/"
 MAX_INSTRUMENTS_PER_REQUEST = 25
 DEFAULT_RATE_LIMIT_PER_HOUR = 5400
+
+# GDFL's *server-side* hourly cap resets on the clock hour (1:00pm, 2:00pm,
+# ...), not on a rolling window -- confirmed by hitting the cap mid-session
+# and having it clear exactly at :00. IST because GDFL's infra is India-based
+# and that's the hour boundary its cap actually resets on.
+IST = _dt.timezone(_dt.timedelta(hours=5, minutes=30))
+
+# How many times _get() will wait-for-the-hour-and-retry on a rate-limit
+# response before giving up and raising. Each retry can sleep up to ~an
+# hour, so this bounds the worst case rather than retrying forever.
+MAX_RATE_LIMIT_RETRIES = 2
+
+# Response bodies GDFL sends back for its hourly cap aren't JSON (so they'd
+# otherwise surface as a confusing "could not parse JSON" error) -- e.g.
+# "Calls per hour are limited." / "Bandwidth per hour is limited.". Detected
+# generically (case-insensitive "hour" + "limit") rather than matching one
+# exact string, since the exact wording isn't documented and has already
+# been seen to vary.
+def _is_hourly_rate_limit_response(text: str) -> bool:
+    lowered = (text or "").lower()
+    return "hour" in lowered and "limit" in lowered
+
+
+def _seconds_until_next_hour(buffer_seconds: float = 5.0) -> float:
+    """Seconds (in IST) until the next clock-hour boundary, plus a small buffer for clock skew."""
+    now = _dt.datetime.now(IST)
+    next_hour = (now + _dt.timedelta(hours=1)).replace(minute=0, second=0, microsecond=0)
+    return max((next_hour - now).total_seconds(), 0.0) + buffer_seconds
+
 
 _DateLike = str | _dt.date
 
@@ -107,10 +139,10 @@ class GDFLClient:
         self.default_exchange = default_exchange
         self.timeout = timeout
         self.session = session or requests.Session()
-        # GDFL enforces a 1800 requests/hour cap on this key; pass
+        # GDFL enforces a 5400 requests/hour cap on this key; pass
         # rate_limit_per_hour=None to disable (e.g. in tests with a mocked session).
         self._rate_limiter = (
-            _RateLimiter(max_calls=rate_limit_per_hour, period=5400.0)
+            _RateLimiter(max_calls=rate_limit_per_hour, period=3600.0)
             if rate_limit_per_hour
             else None
         )
@@ -118,7 +150,7 @@ class GDFLClient:
     # ------------------------------------------------------------------
     # core request plumbing
     # ------------------------------------------------------------------
-    def _get(self, path: str, params: dict) -> dict | str:
+    def _get(self, path: str, params: dict, _retries_left: int = MAX_RATE_LIMIT_RETRIES) -> dict | str:
         if self._rate_limiter is not None:
             self._rate_limiter.acquire()
 
@@ -134,6 +166,23 @@ class GDFLClient:
             resp = self.session.get(url, params=clean_params, timeout=self.timeout)
         except requests.RequestException as exc:
             raise GDFLAPIError(f"Request to {path} failed: {exc}") from exc
+
+        if _is_hourly_rate_limit_response(resp.text):
+            if _retries_left <= 0:
+                raise GDFLAPIError(
+                    f"GDFL hourly rate limit still in effect for {path} after waiting at the hour "
+                    f"boundary {MAX_RATE_LIMIT_RETRIES} time(s): {resp.text[:500]}",
+                    status_code=resp.status_code,
+                    payload=resp.text,
+                )
+            wait_seconds = _seconds_until_next_hour()
+            resume_at = (_dt.datetime.now(IST) + _dt.timedelta(seconds=wait_seconds)).strftime("%H:%M:%S IST")
+            logger.warning(
+                "GDFL hourly rate limit hit on %s (%r); sleeping %.0fs until %s before retrying.",
+                path, resp.text.strip()[:200], wait_seconds, resume_at,
+            )
+            time.sleep(wait_seconds)
+            return self._get(path, params, _retries_left=_retries_left - 1)
 
         if resp.status_code != 200:
             raise GDFLAPIError(

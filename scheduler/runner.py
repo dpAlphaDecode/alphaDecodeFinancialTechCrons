@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as _dt
+import logging
 import traceback
 
 from dotenv import load_dotenv
@@ -31,10 +32,13 @@ from db.models.job_run_log import JobRunLog
 from db.models.scheduled_job import ScheduledJob
 from db.session import SessionLocal
 from fetch_results_calendar import IST
+from logging_setup import configure_logging
 from scheduler.jobs import JOB_FUNCTIONS
 from scheduler.notifier import send_job_notification
 
 load_dotenv()
+
+logger = logging.getLogger(__name__)
 
 DONE_STATUSES = ("success", "no_data_due")
 
@@ -77,6 +81,7 @@ def _execute_job(job: ScheduledJob) -> tuple[str, dict, str | None]:
         return status, summary, None
     except Exception:
         job_db.rollback()
+        logger.exception("job %s failed", job.job_key)
         return "failed", {}, traceback.format_exc()
     finally:
         job_db.close()
@@ -98,13 +103,13 @@ def run_due_jobs(now: _dt.datetime) -> None:
             if now.time() < job.run_time:
                 continue
             if not _dependency_satisfied(config_db, job, today):
-                print(f"[scheduler] {job.job_key}: waiting on dependency {job.depends_on_job_key!r}")
+                logger.warning("%s: waiting on dependency %r", job.job_key, job.depends_on_job_key)
                 continue
             if job.job_key not in JOB_FUNCTIONS:
-                print(f"[scheduler] {job.job_key}: no job function registered, skipping")
+                logger.warning("%s: no job function registered, skipping", job.job_key)
                 continue
 
-            print(f"[scheduler] running {job.job_key}...")
+            logger.info("running %s...", job.job_key)
             started_at = _dt.datetime.now(IST)
             status, summary, error_detail = _execute_job(job)
             finished_at = _dt.datetime.now(IST)
@@ -129,7 +134,7 @@ def run_due_jobs(now: _dt.datetime) -> None:
             config_db.add(log_row)
             config_db.commit()
 
-            print(f"[scheduler] {job.job_key} -> {status}: {summary_text}")
+            logger.info("%s -> %s: %s", job.job_key, status, summary_text)
 
             should_notify = (status in DONE_STATUSES and job.notify_on_success) or (
                 status == "failed" and job.notify_on_failure
@@ -154,8 +159,9 @@ def main():
     parser.add_argument("--now", help="Override the clock, IST, format 'YYYY-MM-DD HH:MM' (for manual testing).")
     args = parser.parse_args()
 
+    configure_logging("scheduler")
     now = resolve_now(args.now)
-    print(f"[scheduler] tick at {now.isoformat()}")
+    logger.info("tick at %s", now.isoformat())
     run_due_jobs(now)
 
 

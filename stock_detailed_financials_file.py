@@ -1,4 +1,5 @@
 # Complete Financials ETL Python Script
+import logging
 import math
 import os
 from typing import Any
@@ -9,6 +10,10 @@ from psycopg2.extras import execute_values
 from sqlalchemy.orm import sessionmaker
 from datetime import date
 
+from logging_setup import configure_logging
+
+configure_logging("stock_detailed_financials_file")
+logger = logging.getLogger(__name__)
 
 
 def extract_financial_metadata(data, frequency):
@@ -22,7 +27,7 @@ def extract_financial_metadata(data, frequency):
 
 
     if fy_row.empty:
-        print("fin date not found")
+        logger.warning("fin date not found")
         return None
 
     fy_start = pd.to_datetime(
@@ -42,7 +47,7 @@ def extract_financial_metadata(data, frequency):
     reporting_quarter = str(
         quarter_row.iloc[0]["Value"]
     ).strip()
-    print(reporting_quarter)
+    logger.info("reporting_quarter=%s", reporting_quarter)
     #2023-01-01
     quarter_map = {
         "first quarter": ("Q1", date(fy_year, 6, 30)),
@@ -54,7 +59,7 @@ def extract_financial_metadata(data, frequency):
     }
     if frequency == "quarterly":
         if reporting_quarter not in quarter_map:
-            print("quarter map not found")
+            logger.warning("quarter map not found")
             if str(data.loc[labels == "DateOfStartOfReportingPeriod"].iloc[0]["Value"]).endswith("04-01"):
                 quarter, report_date = "Q1",  date(fy_year, 6, 30)
             elif str(data.loc[labels == "DateOfStartOfReportingPeriod"].iloc[0]["Value"]).endswith("07-01"):
@@ -155,8 +160,8 @@ def load_symbol_mapping():
 
 
 SYMBOL_MAP = load_symbol_mapping()
-print(SYMBOL_MAP)
-print(f"Loaded {len(SYMBOL_MAP)} symbols")
+logger.info("SYMBOL_MAP=%s", SYMBOL_MAP)
+logger.info("Loaded %s symbols", len(SYMBOL_MAP))
 
 # =========================================================
 # LOAD EXCEL MAPPINGS
@@ -323,9 +328,9 @@ def bulk_insert(table_name, rows):
 
         raw_conn.commit()
 
-    except Exception as e:
+    except Exception:
         raw_conn.rollback()
-        print(f"Bulk insert failed: {e}")
+        logger.exception("Bulk insert failed")
 
     finally:
         cursor.close()
@@ -463,15 +468,14 @@ def process_csv(
     symbol_id
 ):
 
-    print(f"Processing: {symbol} -> {csv_path}")
+    logger.info("Processing: %s -> %s", symbol, csv_path)
 
     try:
         df = pd.read_csv(csv_path)
 
 
-    except Exception as e:
-        print(f"CSV read failed: {csv_path}")
-        print(e)
+    except Exception:
+        logger.exception("CSV read failed: %s", csv_path)
         return False
     if df.empty:
         return False
@@ -517,7 +521,7 @@ def process_csv(
     df.columns = columns
     metadata = extract_financial_metadata(df, frequency)
     if metadata is None:
-        print(f"Financial metadata missing: {csv_path}")
+        logger.warning("Financial metadata missing: %s", csv_path)
         return False
     all_rows = []
     if sector is None:
@@ -525,7 +529,7 @@ def process_csv(
     sector_mapping = mapping.get(sector)
 
     if not sector_mapping:
-        print(f"No mapping found for sector={sector}")
+        logger.warning("No mapping found for sector=%s", sector)
         return False
 
     for metric_name, record in sector_mapping.items():
@@ -538,7 +542,7 @@ def process_csv(
                                "QoQ Net Profit Growth %", "Benefits Ratio %", "Commission %", "Finance Cost %",
                                "ECL Provision %", "Effective Tax Rate %", "EPS Growth%"]:
                 missing_rows.append([symbol, metric_name, record, statement_type, frequency, period, year])
-            print(f"missing key in csv {csv_path}, {record}")
+            logger.warning("missing key in csv %s, %s", csv_path, record)
             continue
 
         all_rows.append({
@@ -598,8 +602,8 @@ def get_label_value(df, label):
 
     try:
         return float(rows.iloc[0]["Value"])
-    except:
-        print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+    except Exception:
+        logger.exception("get_label_value failed for label=%s", label)
         return None
 
 
@@ -634,7 +638,7 @@ def get_metric_value(df, expression):
     )
 
     expression = re.sub(r"\s+", " ", expression).strip()
-    print("??????????????",expression)
+    logger.debug("expression=%s", expression)
 
     tokens = set(
         re.findall(
@@ -649,7 +653,7 @@ def get_metric_value(df, expression):
         # print("token", token)
 
         value = get_label_value(df, token)
-        print("%%%%%%", value)
+        logger.debug("token=%s value=%s", token, value)
         if value is None:
             missing_labels.append(token)
             value = 0
@@ -657,10 +661,7 @@ def get_metric_value(df, expression):
         values[token] = value
 
     if missing_labels:
-        print(
-            f"Missing labels in formula [{expression}] -> "
-            f"{missing_labels}"
-        )
+        logger.warning("Missing labels in formula [%s] -> %s", expression, missing_labels)
 
     safe_globals = {
         "__builtins__": {},
@@ -680,7 +681,6 @@ def get_metric_value(df, expression):
         )
 
         if result is None:
-            print("helllooo")
             return None
 
         if isinstance(result, (int, float)):
@@ -694,17 +694,13 @@ def get_metric_value(df, expression):
 
     except ZeroDivisionError:
 
-        print(f"Division by zero in formula: {expression}")
+        logger.warning("Division by zero in formula: %s", expression)
 
         return None
 
-    except Exception as e:
+    except Exception:
 
-        print(
-            f"Formula evaluation failed: {expression}"
-        )
-
-        print(e)
+        logger.exception("Formula evaluation failed: %s", expression)
 
         return None
 
@@ -721,7 +717,7 @@ def run_etl():
 
         table_name = config["table_name"]
 
-        print(f"\nProcessing {statement_folder}")
+        logger.info("Processing %s", statement_folder)
 
         # consolidated first
         for statement_type in ["consolidated", "standalone"]:
@@ -778,12 +774,11 @@ def run_etl():
 
                         total_inserted += 1
                         if xyz == False:
-                            print(f"FAILED xyz: {csv_path}")
+                            logger.warning("FAILED xyz: %s", csv_path)
                         else:
-                            print("success")
-                    except Exception as e:
-                        print(f"FAILED: {csv_path}")
-                        print(e)
+                            logger.info("success")
+                    except Exception:
+                        logger.exception("FAILED: %s", csv_path)
     #
     # print(f"\nCompleted. Processed: {total_inserted}")
 # =========================================================

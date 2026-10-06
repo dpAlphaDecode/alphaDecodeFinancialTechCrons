@@ -46,6 +46,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import logging
 import os
 import sys
 import time
@@ -62,6 +63,9 @@ from fetch_historical_financials import (
     current_fy_year,
     store_financials_for_symbol,
 )
+from logging_setup import configure_logging
+
+logger = logging.getLogger(__name__)
 
 PROGRESS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".upload_script_progress.json")
 
@@ -101,7 +105,7 @@ def prompt_start_index(default_index: int) -> int:
     try:
         return int(raw)
     except ValueError:
-        print(f"Invalid index '{raw}', using default {default_index}.")
+        logger.warning("Invalid index '%s', using default %s.", raw, default_index)
         return default_index
 
 consolidated = "/home/decodeup/PycharmProjects/alphaDecodeFinancialTechCrons/upload_data_from_files/data_13_april_2026/Consolidated"
@@ -199,12 +203,13 @@ def main():
     )
     args = parser.parse_args()
 
+    configure_logging("upload_script")
     db: Session = SessionLocal()
     try:
         db_symbols = (
             db.query(Symbol).filter(Symbol.symbol.isnot(None)).order_by(Symbol.symbol).all()
         )
-        print(f"{len(db_symbols)} symbol(s) in the symbols table; years={YEARS}.")
+        logger.info("%s symbol(s) in the symbols table; years=%s.", len(db_symbols), YEARS)
 
         total = len(db_symbols)
 
@@ -216,7 +221,7 @@ def main():
             start_index = args.start_index
         elif sys.stdin.isatty():
             if progress.get("last_symbol"):
-                print(f"Last run stopped at index {progress['last_index']} ({progress['last_symbol']}).")
+                logger.info("Last run stopped at index %s (%s).", progress["last_index"], progress["last_symbol"])
             start_index = prompt_start_index(default_start_index)
         else:
             start_index = default_start_index
@@ -227,20 +232,19 @@ def main():
         rejected_symbols: dict[str, list[str]] = {}
         for idx, db_symbol in enumerate(db_symbols, start=start_index):
             symbol = db_symbol.symbol
-            print(f"[{idx}/{total}] {symbol}")
+            logger.info("[%s/%s] %s", idx, total, symbol)
 
             data = fetch_historical_financials_from_csv(symbol)
             written = store_financials_for_symbol(db, db_symbol.id, symbol, data, rejected_symbols)
             db.commit()
             save_progress(idx, total, symbol)
             if written:
-                print(f"  stored/updated {written} metric row(s)")
+                logger.info("stored/updated %s metric row(s)", written)
 
         if rejected_symbols:
-            print("\n===== Symbols with unresolved metrics =====")
             for symbol, reasons in rejected_symbols.items():
                 for reason in reasons:
-                    print(f"  {symbol}: {reason}")
+                    logger.warning("%s: %s", symbol, reason)
     finally:
         db.close()
 

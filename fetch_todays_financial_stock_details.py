@@ -23,6 +23,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import logging
 import time
 
 from dotenv import load_dotenv
@@ -35,8 +36,11 @@ from fetch_historical_financial_stock_details import (
 )
 from fetch_todays_financials import fetch_due_calendar_targets, fetch_due_financials, resolve_run_date
 from gdfl import GDFLClient
+from logging_setup import configure_logging
 
 load_dotenv()
+
+logger = logging.getLogger(__name__)
 
 
 def main():
@@ -52,6 +56,7 @@ def main():
     parser.add_argument("--sleep", type=float, default=0.0, help="Seconds to sleep between symbols (rate limiting).")
     args = parser.parse_args()
 
+    configure_logging("fetch_todays_financial_stock_details")
     load_metric_mappings()  # fail fast if the xlsx is missing/malformed, before hitting the API
 
     run_date = resolve_run_date(args.date)
@@ -60,7 +65,7 @@ def main():
     db = SessionLocal()
     try:
         targets, _ = fetch_due_calendar_targets(db, run_date, symbols_filter)
-        print(f"{len(targets)} symbol(s) have a financial_calendar entry due {run_date}.")
+        logger.info("%s symbol(s) have a financial_calendar entry due %s.", len(targets), run_date)
         if not targets:
             return
 
@@ -70,21 +75,20 @@ def main():
         for idx, (symbol_id, entry) in enumerate(targets.items(), start=1):
             symbol = entry["symbol"]
             combos = entry["combos"]
-            print(f"[{idx}/{total}] Fetching {symbol} ({len(combos)} combo(s) due today)...")
+            logger.info("[%s/%s] Fetching %s (%s combo(s) due today)...", idx, total, symbol, len(combos))
 
             data = fetch_due_financials(symbol, args.exchange, combos, client)
             written = store_detailed_financials_for_symbol(db, symbol_id, symbol, data, rejected_symbols)
             db.commit()
-            print(f"  stored/updated {written} metric rows")
+            logger.info("stored/updated %s metric rows", written)
 
             if args.sleep and idx < total:
                 time.sleep(args.sleep)
 
         if rejected_symbols:
-            print("\n===== Symbols with unresolved data =====")
             for symbol, reasons in rejected_symbols.items():
                 for reason in reasons:
-                    print(f"  {symbol}: {reason}")
+                    logger.warning("%s: %s", symbol, reason)
     finally:
         db.close()
 

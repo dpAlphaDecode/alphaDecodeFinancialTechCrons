@@ -30,6 +30,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as _dt
+import logging
 
 from dotenv import load_dotenv
 
@@ -38,8 +39,11 @@ from db.models.symbol import Symbol
 from db.session import SessionLocal
 from fetch_historical_financials import current_fy_year
 from gdfl import GDFLAPIError, GDFLClient
+from logging_setup import configure_logging
 
 load_dotenv()
+
+logger = logging.getLogger(__name__)
 
 DEFAULT_EXCHANGE = "BSE"
 DEFAULT_RANGES = ["Next30days"]
@@ -67,7 +71,7 @@ def fetch_results_calendar_entries(
         try:
             response = client.get_results_calendar(exchange=exchange, range=range_)
         except GDFLAPIError as exc:
-            print(f"  GetResultsCalendar range={range_} failed: {exc}")
+            logger.error("GetResultsCalendar range=%s failed: %s", range_, exc)
             continue
         for entry in response.get("Value", []):
             isin = entry.get("ISIN")
@@ -87,7 +91,7 @@ def fetch_financial_results_items(
             year=year, period=None, exchange=exchange, instrument_identifiers=scrip_id
         )
     except GDFLAPIError as exc:
-        print(f"  GetFinancialResultsItems failed for {scrip_id} year={year}: {exc}")
+        logger.error("GetFinancialResultsItems failed for %s year=%s: %s", scrip_id, year, exc)
         return []
     return response.get("Value", [])
 
@@ -174,9 +178,9 @@ def run(
     owns; when omitted, this opens and closes its own.
     """
     client = GDFLClient()
-    print(f"Fetching results calendar for {exchange} ranges={ranges}...")
+    logger.info("Fetching results calendar for %s ranges=%s...", exchange, ranges)
     entries = fetch_results_calendar_entries(exchange=exchange, ranges=ranges, client=client)
-    print(f"Fetched {len(entries)} unique (ISIN, ResultsDate) entries.")
+    logger.info("Fetched %s unique (ISIN, ResultsDate) entries.", len(entries))
 
     owns_db = db is None
     if owns_db:
@@ -188,11 +192,9 @@ def run(
         if owns_db:
             db.close()
 
-    print(f"Stored/updated {written} rows.")
+    logger.info("Stored/updated %s rows.", written)
     if unmatched:
-        print("\n===== Unmatched entries =====")
-        for line in unmatched:
-            print(f"  {line}")
+        logger.warning("Unmatched entries (%s): %s", len(unmatched), "; ".join(unmatched))
 
     return {"entries_fetched": len(entries), "written": written, "unmatched": unmatched}
 
@@ -210,6 +212,7 @@ def main():
     args = parser.parse_args()
     ranges = tuple(r.strip() for r in args.range.split(",") if r.strip())
 
+    configure_logging("fetch_results_calendar")
     run(exchange=args.exchange, ranges=ranges)
 
 

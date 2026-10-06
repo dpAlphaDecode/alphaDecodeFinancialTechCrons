@@ -24,6 +24,16 @@ same response:
 Both store functions are unchanged -- this only removes the duplicate
 GetFinancialResults calls by sharing one fetch between them.
 
+Before any of that, missing_year_periods_for_symbol() checks all FOUR
+tables -- financials, pnl_financials, balance_sheet_financials,
+cashflow_financials -- for each (statement type, year, period) combo. A
+combo is only skipped (no API call) when it's already present in BOTH the
+`financials` table AND that statement type's detailed table; missing from
+either one re-fetches it, so a partial prior write (e.g. headline metrics
+landed in `financials` but the detailed table write failed on an unmapped
+sector) gets repaired on the next run instead of silently staying
+incomplete forever.
+
 Usage:
     python fetch_historical_financials_and_stock_details.py
     python fetch_historical_financials_and_stock_details.py --symbols RELIANCE,TCS
@@ -33,12 +43,14 @@ from __future__ import annotations
 
 import argparse
 import json
+import logging
 import os
 import sys
 import time
 
 from dotenv import load_dotenv
 
+from db.models.financials import Financial
 from db.models.symbol import Symbol
 from db.session import SessionLocal
 from fetch_historical_financials import (
@@ -57,8 +69,11 @@ from fetch_historical_financial_stock_details import (
     store_detailed_financials_for_symbol,
 )
 from gdfl import GDFLClient
+from logging_setup import configure_logging
 
 load_dotenv()
+
+logger = logging.getLogger(__name__)
 
 PROGRESS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".fetch_historical_financials_and_stock_details_progress.json")
 
@@ -94,19 +109,36 @@ def _stored_period_key(period: str) -> tuple[str, str]:
     return "quarterly", QUARTER_LABELS.get(period, period)
 
 
+def _stored_set(db, model, symbol_id: int, years: set[int]) -> set[tuple[int, str, str]]:
+    """Distinct (year, frequency, period) already stored for this symbol/model, scoped to `years`."""
+    rows = (
+        db.query(model.year, model.frequency, model.period)
+        .filter(model.symbol_id == symbol_id, model.year.in_(years))
+        .distinct()
+        .all()
+    )
+    return {(row.year, row.frequency, row.period or "") for row in rows}
+
+
 def missing_year_periods_for_symbol(
     db, symbol_id: int
 ) -> dict[str, list[tuple[int, str]]]:
     """
     For each statement type, the (FY-start year, period) combos from
-    STATEMENT_YEAR_PERIODS that this symbol doesn't already have a
-    metric_name row for in the corresponding detailed table
-    (pnl_financials/balance_sheet_financials/cashflow_financials).
+    STATEMENT_YEAR_PERIODS that this symbol is missing from EITHER the
+    `financials` table OR the corresponding detailed table
+    (pnl_financials/balance_sheet_financials/cashflow_financials) -- i.e. a
+    combo only counts as "already have" when BOTH targets this fetch writes
+    to (store_financials_for_symbol() and store_detailed_financials_for_symbol(),
+    see main()) already have a row for it. If either one is missing it
+    (e.g. a prior run's detailed-table write failed due to an unmapped
+    sector while the headline financials write still succeeded), this
+    re-fetches rather than silently leaving that table incomplete forever.
 
     Checking here -- before calling the API at all -- means a combo already
-    stored from a previous run is never re-fetched, which is what keeps
-    re-running this script over the widened FY2021-22..FY2026-27 Q1 range
-    from blowing through GDFL's request-rate cap.
+    stored in both places from a previous run is never re-fetched, which is
+    what keeps re-running this script over the widened FY2021-22..FY2026-27
+    Q1 range from blowing through GDFL's request-rate cap.
     """
     missing: dict[str, list[tuple[int, str]]] = {}
     for stmt_type in STATEMENT_TYPES:
@@ -115,29 +147,25 @@ def missing_year_periods_for_symbol(
             missing[stmt_type] = []
             continue
 
-        model = STATEMENT_TABLE_CONFIG[stmt_type]
-        # NOTE: model.statement_type is *not* "ProfitLoss"/"BalanceSheet"/"CashFlow"
-        # -- each of these three tables is already dedicated to one statement
-        # type, so that column is repurposed to store the report nature
-        # ("consolidated"/"standalone", see upsert_detailed_metric()). No
-        # extra filter is needed here: the model class alone already scopes
-        # this query to the right statement type.
+        # NOTE: model.statement_type (on the detailed table) is *not*
+        # "ProfitLoss"/"BalanceSheet"/"CashFlow" -- each of these three
+        # tables is already dedicated to one statement type, so that column
+        # is repurposed to store the report nature ("consolidated"/
+        # "standalone", see upsert_detailed_metric()). No extra filter is
+        # needed here: the model class alone already scopes this query to
+        # the right statement type. `financials` has no such column (one
+        # table shared across all three statement types) -- its (year,
+        # frequency, period) key alone is what's checked there.
+        detailed_model = STATEMENT_TABLE_CONFIG[stmt_type]
         years = {year for year, _ in year_periods}
-        rows = (
-            db.query(model.year, model.frequency, model.period)
-            .filter(
-                model.symbol_id == symbol_id,
-                model.year.in_(years),
-            )
-            .distinct()
-            .all()
-        )
-        stored = {(row.year, row.frequency, row.period or "") for row in rows}
+        stored_detailed = _stored_set(db, detailed_model, symbol_id, years)
+        stored_financials = _stored_set(db, Financial, symbol_id, years)
 
         missing[stmt_type] = [
             (year, period)
             for year, period in year_periods
-            if (year, *_stored_period_key(period)) not in stored
+            if (year, *_stored_period_key(period)) not in stored_detailed
+            or (year, *_stored_period_key(period)) not in stored_financials
         ]
     return missing
 
@@ -153,7 +181,7 @@ def prompt_start_index(default_index: int) -> int:
     try:
         return int(raw)
     except ValueError:
-        print(f"Invalid index '{raw}', using default {default_index}.")
+        logger.warning("Invalid index '%s', using default %s.", raw, default_index)
         return default_index
 
 
@@ -179,6 +207,7 @@ def main():
     )
     args = parser.parse_args()
 
+    configure_logging("fetch_historical_financials_and_stock_details")
     load_metric_mappings()  # fail fast if Detailed_page_keys.xlsx is missing/malformed, before hitting the API
 
     db = SessionLocal()
@@ -206,7 +235,7 @@ def main():
             start_index = args.start_index
         elif sys.stdin.isatty():
             if progress.get("last_symbol"):
-                print(f"Last run stopped at index {progress['last_index']} ({progress['last_symbol']}).")
+                logger.info("Last run stopped at index %s (%s).", progress["last_index"], progress["last_symbol"])
             start_index = prompt_start_index(default_start_index)
         else:
             start_index = default_start_index
@@ -223,7 +252,7 @@ def main():
         client = GDFLClient()
         rejected_symbols: dict[str, list[str]] = {}
         for idx, (symbol, exchange, symbol_id) in enumerate(targets, start=start_index):
-            print(f"[{idx}/{total}] Fetching {symbol} ({exchange})...")
+            logger.info("[%s/%s] Fetching %s (%s)...", idx, total, symbol, exchange)
 
             if symbol_id is None:
                 rejected_symbols.setdefault(symbol, []).append("symbol not found in `symbols` table, skipped")
@@ -232,7 +261,7 @@ def main():
 
             year_periods_by_statement = missing_year_periods_for_symbol(db, symbol_id)
             if not any(year_periods_by_statement.values()):
-                print("  already have every metric for this symbol's date range, skipping API call")
+                logger.info("already have every metric for this symbol's date range, skipping API call")
                 save_progress(idx, total, symbol)
                 continue
 
@@ -249,19 +278,18 @@ def main():
             written_detailed = store_detailed_financials_for_symbol(db, symbol_id, symbol, data, rejected_symbols)
             db.commit()
             save_progress(idx, total, symbol)
-            print(
-                f"  stored/updated {written_financials} financials row(s), "
-                f"{written_detailed} detailed metric row(s)"
+            logger.info(
+                "stored/updated %s financials row(s), %s detailed metric row(s)",
+                written_financials, written_detailed,
             )
 
             if args.sleep and idx < total:
                 time.sleep(args.sleep)
 
         if rejected_symbols:
-            print("\n===== Symbols with unresolved data =====")
             for symbol, reasons in rejected_symbols.items():
                 for reason in reasons:
-                    print(f"  {symbol}: {reason}")
+                    logger.warning("%s: %s", symbol, reason)
     finally:
         db.close()
 

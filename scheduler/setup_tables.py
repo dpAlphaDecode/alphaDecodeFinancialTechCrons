@@ -14,6 +14,7 @@ Usage:
 from __future__ import annotations
 
 import datetime as _dt
+import logging
 
 from dotenv import load_dotenv
 from sqlalchemy import text
@@ -22,8 +23,11 @@ from db.base import Base
 from db.models.job_run_log import JobRunLog
 from db.models.scheduled_job import ScheduledJob
 from db.session import SessionLocal, engine
+from logging_setup import configure_logging
 
 load_dotenv()
+
+logger = logging.getLogger(__name__)
 
 DEFAULT_JOBS = [
     dict(
@@ -76,25 +80,26 @@ def seed_jobs() -> None:
             row = db.query(ScheduledJob).filter_by(job_key=defaults["job_key"]).first()
             if row is None:
                 db.add(ScheduledJob(**defaults))
-                print(f"  inserted {defaults['job_key']}")
+                logger.info("inserted %s", defaults["job_key"])
             else:
                 row.run_time = defaults["run_time"]
                 row.depends_on_job_key = defaults["depends_on_job_key"]
                 row.description = defaults["description"]
-                print(f"  updated {defaults['job_key']}")
+                logger.info("updated %s", defaults["job_key"])
         db.commit()
     finally:
         db.close()
 
 
 def main():
-    print("Creating scheduled_jobs / job_run_log tables (if not already present)...")
+    configure_logging("setup_tables")
+    logger.info("Creating scheduled_jobs / job_run_log tables (if not already present)...")
     create_tables()
-    print("Adding fetched_at/fetch_status columns to financial_calendar (if not already present)...")
+    logger.info("Adding fetched_at/fetch_status columns to financial_calendar (if not already present)...")
     add_financial_calendar_columns()
-    print("Seeding/updating default job rows...")
+    logger.info("Seeding/updating default job rows...")
     seed_jobs()
-    print("Done.")
+    logger.info("Done.")
 
 
 if __name__ == "__main__":

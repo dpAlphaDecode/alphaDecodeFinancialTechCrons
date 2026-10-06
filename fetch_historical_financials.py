@@ -26,6 +26,7 @@ from __future__ import annotations
 import argparse
 import datetime as _dt
 import json
+import logging
 import os
 import time
 
@@ -35,8 +36,11 @@ from db.models.symbol import Symbol
 from db.session import SessionLocal
 from financial_metrics import extract_metrics_with_priority, fy_year_and_quarter, resolve_period_date, store_financials
 from gdfl import GDFLAPIError, GDFLClient
+from logging_setup import configure_logging
 
 load_dotenv()
+
+logger = logging.getLogger(__name__)
 
 STATEMENT_TYPES = ("ProfitLoss", "BalanceSheet", "CashFlow")
 NATURES_OF_REPORT = ("Consolidated", "Standalone")
@@ -195,16 +199,22 @@ def fetch_all_symbols() -> list[Symbol]:
 
 
 def _print_summary(symbol: str, data: dict):
-    print(f"\n===== {symbol} =====")
+    logger.info("===== %s =====", symbol)
     for stmt_type, by_year in data.items():
         for year, by_period in sorted(by_year.items()):
             for period, by_nature in by_period.items():
                 for nature_of_report, payload in by_nature.items():
                     if isinstance(payload, dict) and "error" in payload:
-                        print(f"  {stmt_type} FY{year}-{year + 1} {period} {nature_of_report}: ERROR - {payload['error'][:100]}")
+                        logger.info(
+                            "%s FY%s-%s %s %s: ERROR - %s",
+                            stmt_type, year, year + 1, period, nature_of_report, payload["error"][:100],
+                        )
                     else:
                         items = payload.get("Value", []) if isinstance(payload, dict) else []
-                        print(f"  {stmt_type} FY{year}-{year + 1} {period} {nature_of_report}: {len(items)} line items")
+                        logger.info(
+                            "%s FY%s-%s %s %s: %s line items",
+                            stmt_type, year, year + 1, period, nature_of_report, len(items),
+                        )
 
 
 def main():
@@ -218,6 +228,7 @@ def main():
     parser.add_argument("--sleep", type=float, default=0.0, help="Seconds to sleep between symbols (rate limiting).")
     args = parser.parse_args()
 
+    configure_logging("fetch_historical_financials")
     db = SessionLocal()
     try:
         if args.symbols:
@@ -246,7 +257,7 @@ def main():
         rejected_symbols: dict[str, list[str]] = {}
         total = len(targets)
         for idx, (symbol, exchange, symbol_id) in enumerate(targets, start=1):
-            print(f"[{idx}/{total}] Fetching {symbol} ({exchange})...")
+            logger.info("[%s/%s] Fetching %s (%s)...", idx, total, symbol, exchange)
             data = fetch_historical_financials(symbol, exchange=exchange, client=client)
 
             if args.json_dir:
@@ -263,16 +274,15 @@ def main():
                     db, symbol_id, symbol, data, rejected_symbols
                 )
                 db.commit()
-                print(f"  stored/updated {written} metric rows")
+                logger.info("stored/updated %s metric rows", written)
 
             if args.sleep and idx < total:
                 time.sleep(args.sleep)
 
         if rejected_symbols:
-            print("\n===== Symbols with unresolved metrics =====")
             for symbol, reasons in rejected_symbols.items():
                 for reason in reasons:
-                    print(f"  {symbol}: {reason}")
+                    logger.warning("%s: %s", symbol, reason)
     finally:
         db.close()
 

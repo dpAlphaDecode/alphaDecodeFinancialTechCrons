@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as _dt
+import logging
 import math
 import os
 import re
@@ -24,8 +25,11 @@ from fetch_historical_financials import (
 )
 from financial_metrics import _xbrl_filename, fy_year_and_quarter, resolve_period_date
 from gdfl import GDFLClient
+from logging_setup import configure_logging
 
 load_dotenv()
+
+logger = logging.getLogger(__name__)
 
 EXCEL_MAPPING_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Detailed_page_keys.xlsx")
 
@@ -386,6 +390,7 @@ def main():
     parser.add_argument("--sleep", type=float, default=0.0, help="Seconds to sleep between symbols (rate limiting).")
     args = parser.parse_args()
 
+    configure_logging("fetch_historical_financial_stock_details")
     load_metric_mappings()  # fail fast if the xlsx is missing/malformed, before hitting the API
 
     db = SessionLocal()
@@ -410,7 +415,7 @@ def main():
         rejected_symbols: dict[str, list[str]] = {}
         total = len(targets)
         for idx, (symbol, exchange, symbol_id) in enumerate(targets, start=1):
-            print(f"[{idx}/{total}] Fetching {symbol} ({exchange})...")
+            logger.info("[%s/%s] Fetching %s (%s)...", idx, total, symbol, exchange)
 
             if symbol_id is None:
                 rejected_symbols.setdefault(symbol, []).append("symbol not found in `symbols` table, skipped")
@@ -419,16 +424,15 @@ def main():
             data = fetch_historical_financials(symbol, exchange=exchange, client=client)
             written = store_detailed_financials_for_symbol(db, symbol_id, symbol, data, rejected_symbols)
             db.commit()
-            print(f"  stored/updated {written} metric rows")
+            logger.info("stored/updated %s metric rows", written)
 
             if args.sleep and idx < total:
                 time.sleep(args.sleep)
 
         if rejected_symbols:
-            print("\n===== Symbols with unresolved data =====")
             for symbol, reasons in rejected_symbols.items():
                 for reason in reasons:
-                    print(f"  {symbol}: {reason}")
+                    logger.warning("%s: %s", symbol, reason)
     finally:
         db.close()
 

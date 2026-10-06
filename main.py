@@ -3,11 +3,16 @@ Example usage of the GDFL (GlobalDataFeeds) Fundamental Data API client.
 
 Set GDFL_ACCESS_KEY in .env (or the environment) before running.
 """
+import logging
+
 from dotenv import load_dotenv
 
 from gdfl import GDFLClient, GDFLAPIError
+from logging_setup import configure_logging
 
 load_dotenv()
+
+logger = logging.getLogger(__name__)
 
 
 def main():
@@ -23,7 +28,7 @@ def main():
             type="ProfitLoss",
             period="QD",
         )
-        print("------------------->>>>>>>>>>>",pnl)
+        logger.info("pnl=%s", pnl)
         # items = pnl.get("Value", [])
         # print("Profit & Loss line items:", len(items))
         # for item in items[:5]:
@@ -47,8 +52,9 @@ def main():
         # print("\nCorporate actions:", fin_results)
 
     except GDFLAPIError as exc:
-        print(f"GDFL API error: {exc} (status={exc.status_code})")
+        logger.error("GDFL API error: %s (status=%s)", exc, exc.status_code)
 
 
 if __name__ == "__main__":
+    configure_logging("main")
     main()

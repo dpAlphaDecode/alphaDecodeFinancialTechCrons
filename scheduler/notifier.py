@@ -13,9 +13,12 @@ from __future__ import annotations
 
 import datetime as _dt
 import html
+import logging
 import os
 
 import requests
+
+logger = logging.getLogger(__name__)
 
 RESEND_API_URL = "https://api.resend.com/emails"
 
@@ -74,9 +77,10 @@ def send_job_notification(
     """Returns True if the email was accepted by Resend, False otherwise (never raises)."""
     api_key, from_email, recipients = _config()
     if not api_key or not from_email or not recipients:
-        print(
-            f"[notifier] email skipped for {job_key}: set RESEND_API_KEY, NOTIFY_FROM_EMAIL "
-            "and NOTIFY_RECIPIENTS in .env to enable notifications"
+        logger.warning(
+            "email skipped for %s: set RESEND_API_KEY, NOTIFY_FROM_EMAIL "
+            "and NOTIFY_RECIPIENTS in .env to enable notifications",
+            job_key,
         )
         return False
 
@@ -91,9 +95,9 @@ def send_job_notification(
             timeout=15,
         )
         if response.status_code >= 300:
-            print(f"[notifier] Resend API error {response.status_code} for {job_key}: {response.text}")
+            logger.error("Resend API error %s for %s: %s", response.status_code, job_key, response.text)
             return False
         return True
-    except requests.RequestException as exc:
-        print(f"[notifier] failed to send email for {job_key}: {exc}")
+    except requests.RequestException:
+        logger.exception("failed to send email for %s", job_key)
         return False

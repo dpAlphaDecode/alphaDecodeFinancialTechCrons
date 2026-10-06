@@ -24,6 +24,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import logging
 
 import pandas as pd
 from dotenv import load_dotenv
@@ -33,8 +34,11 @@ from db.models.cashflow_financials import CashflowFinancial
 from db.models.pnl_financials import PnlFinancial
 from db.models.symbol import Symbol
 from db.session import SessionLocal
+from logging_setup import configure_logging
 
 load_dotenv()
+
+logger = logging.getLogger(__name__)
 
 QUARTER_LABELS = {"QJ": "Q1", "QS": "Q2", "QD": "Q3", "QM": "Q4"}
 NATURES = ("consolidated", "standalone")
@@ -118,19 +122,20 @@ def main():
     checks = parse_checks(args.checks)
     symbols_filter = {s.strip() for s in args.symbols.split(",") if s.strip()} if args.symbols else None
 
+    configure_logging("check_financials_availability")
     df = run(checks, symbols_filter)
     df.to_excel(args.output, index=False)
-    print(f"Wrote {len(df)} row(s) to {args.output}")
+    logger.info("Wrote %s row(s) to %s", len(df), args.output)
 
     for year, period_code in checks:
         period_label = QUARTER_LABELS.get(period_code, period_code)
         tag = f"{year}{period_code}"
-        print(f"\n{tag} (FY{year} {period_label}):")
+        logger.info("%s (FY%s %s):", tag, year, period_label)
         for table_key in TABLES:
             for nature in NATURES:
                 col = f"{table_key}_{tag}_{nature}"
                 yes = int((df[col] == "Yes").sum())
-                print(f"  {col}: {yes}/{len(df)} symbols have data")
+                logger.info("%s: %s/%s symbols have data", col, yes, len(df))
 
 
 if __name__ == "__main__":

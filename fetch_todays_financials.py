@@ -16,6 +16,16 @@ Consolidated-first-Standalone-fallback logic from fetch_historical_financials.py
 (ProfitLoss/BalanceSheet/CashFlow) -- e.g. FR, RelatedPartyTransactions --
 aren't understood by the `financials` mapping and are skipped.
 
+`financial_calendar.results_period` values outside ALLOWED_PERIODS (the
+standard quarters QJ/QS/QD/QM plus the full year M12) are skipped too -- e.g.
+M6, which some companies file semi-annually instead of quarterly. These
+filings often omit DateOfEndOfReportingPeriod entirely, in which case
+financial_metrics._period_end_date() falls back to DateOfEndOfFinancialYear
+-- the end of that company's *whole* FY, not of the period actually being
+reported -- which fy_year_and_quarter() then mislabels under the
+hardcoded April-March FY assumption every non-standard-FY company breaks.
+Simplest fix: never fetch/store these periods at all.
+
 Usage:
     python fetch_todays_financials.py
     python fetch_todays_financials.py --date 2026-09-18
@@ -25,6 +35,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as _dt
+import logging
 import time
 
 from dotenv import load_dotenv
@@ -36,14 +47,24 @@ from db.models.symbol import Symbol
 from db.session import SessionLocal
 from fetch_historical_financials import (
     DEFAULT_EXCHANGE,
+    FULL_YEAR_PERIOD,
     NATURES_OF_REPORT,
     STATEMENT_TYPES,
+    TRAILING_YEAR_PERIODS,
     store_financials_for_symbol,
 )
 from fetch_results_calendar import IST
 from gdfl import GDFLAPIError, GDFLClient
+from logging_setup import configure_logging
 
 load_dotenv()
+
+logger = logging.getLogger(__name__)
+
+# The only results_period values this pipeline fetches/stores -- the four
+# standard quarters plus the full year. Anything else (e.g. M6 semi-annual
+# filings) is skipped; see module docstring.
+ALLOWED_PERIODS = set(TRAILING_YEAR_PERIODS) | {FULL_YEAR_PERIOD}
 
 
 def resolve_run_date(cli_date: str | None) -> _dt.date:
@@ -79,15 +100,21 @@ def fetch_due_calendar_targets(
 
     targets: dict[int, dict] = {}
     skipped_types: set[str] = set()
+    skipped_periods: set[str] = set()
     for cal, symbol in query.all():
         if cal.results_type not in STATEMENT_TYPES:
             skipped_types.add(cal.results_type)
+            continue
+        if cal.results_period not in ALLOWED_PERIODS:
+            skipped_periods.add(cal.results_period)
             continue
         entry = targets.setdefault(cal.symbol_id, {"symbol": symbol, "combos": set()})
         entry["combos"].add((cal.results_type, cal.result_year, cal.results_period))
 
     if skipped_types:
-        print(f"  (skipping calendar rows with unsupported results_type: {sorted(skipped_types)})")
+        logger.warning("skipping calendar rows with unsupported results_type: %s", sorted(skipped_types))
+    if skipped_periods:
+        logger.warning("skipping calendar rows with unsupported results_period: %s", sorted(skipped_periods))
     return targets, sorted(skipped_types)
 
 
@@ -131,13 +158,14 @@ def main():
     parser.add_argument("--sleep", type=float, default=0.0, help="Seconds to sleep between symbols (rate limiting).")
     args = parser.parse_args()
 
+    configure_logging("fetch_todays_financials")
     run_date = resolve_run_date(args.date)
     symbols_filter = {s.strip() for s in args.symbols.split(",") if s.strip()} if args.symbols else None
 
     db = SessionLocal()
     try:
         targets, _ = fetch_due_calendar_targets(db, run_date, symbols_filter)
-        print(f"{len(targets)} symbol(s) have a financial_calendar entry due {run_date}.")
+        logger.info("%s symbol(s) have a financial_calendar entry due %s.", len(targets), run_date)
         if not targets:
             return
 
@@ -147,21 +175,20 @@ def main():
         for idx, (symbol_id, entry) in enumerate(targets.items(), start=1):
             symbol = entry["symbol"]
             combos = entry["combos"]
-            print(f"[{idx}/{total}] Fetching {symbol} ({len(combos)} combo(s) due today)...")
+            logger.info("[%s/%s] Fetching %s (%s combo(s) due today)...", idx, total, symbol, len(combos))
 
             data = fetch_due_financials(symbol, args.exchange, combos, client)
             written = store_financials_for_symbol(db, symbol_id, symbol, data, rejected_symbols)
             db.commit()
-            print(f"  stored/updated {written} metric rows")
+            logger.info("stored/updated %s metric rows", written)
 
             if args.sleep and idx < total:
                 time.sleep(args.sleep)
 
         if rejected_symbols:
-            print("\n===== Symbols with unresolved metrics =====")
             for symbol, reasons in rejected_symbols.items():
                 for reason in reasons:
-                    print(f"  {symbol}: {reason}")
+                    logger.warning("%s: %s", symbol, reason)
     finally:
         db.close()
 

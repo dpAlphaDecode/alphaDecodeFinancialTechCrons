@@ -35,6 +35,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import logging
 import os
 from datetime import date, datetime, timedelta
 
@@ -45,8 +46,11 @@ from sqlalchemy.orm import Session
 from db.models.price_snapshots import PriceSnapshot
 from db.models.symbol import Symbol
 from db.session import SessionLocal
+from logging_setup import configure_logging
 
 load_dotenv()
+
+logger = logging.getLogger(__name__)
 
 API_URL = "https://nimblerest.lisuns.com:4532/GetHistory"
 DEFAULT_DAYS = 200
@@ -76,8 +80,8 @@ def fetch_history(symbol_code: str, exchange: str, days: int, api_key: str) -> l
         response = requests.get(API_URL, params=params, timeout=30)
         response.raise_for_status()
         return response.json().get("OHLC", [])
-    except Exception as e:
-        print(f"❌ Error for {symbol_code}: {e}")
+    except Exception:
+        logger.exception("Error fetching history for %s", symbol_code)
         return []
 
 
@@ -140,22 +144,22 @@ def run_snapshot_scraper(
         symbols = query.all()
         summary["symbols_found"] = len(symbols)
 
-        print(f"\U0001f50d Found {len(symbols)} symbols to process")
+        logger.info("Found %s symbols to process", len(symbols))
         for sym in symbols:
-            print(f"\U0001f4ca Processing {sym.symbol} (ID: {sym.id})")
+            logger.info("Processing %s (ID: %s)", sym.symbol, sym.id)
             ohlc_data = fetch_history(sym.symbol, exchange, days, api_key)
-            print(f"\U0001f4c8 Fetched {len(ohlc_data)} records for {sym.symbol}")
+            logger.info("Fetched %s records for %s", len(ohlc_data), sym.symbol)
             if not ohlc_data:
-                print(f"⚠️ Skipping {sym.symbol}, no data")
+                logger.warning("Skipping %s, no data", sym.symbol)
                 summary["symbols_skipped_no_data"] += 1
                 continue
             added = insert_price_snapshots(sym.id, ohlc_data, db)
             db.commit()
-            print(f"✅ Inserted {added} new records for {sym.symbol}")
+            logger.info("Inserted %s new records for %s", added, sym.symbol)
             summary["symbols_processed"] += 1
             summary["rows_inserted"] += added
     except Exception as e:
-        print(f"❌ Scraper failed: {e}")
+        logger.exception("Scraper failed")
         summary["error"] = str(e)
     finally:
         if owns_db:
@@ -175,6 +179,7 @@ def main():
     parser.add_argument("--exchange", default=DEFAULT_EXCHANGE)
     args = parser.parse_args()
 
+    configure_logging("fetch_price_snapshots")
     api_key = os.environ.get("GDFL_ACCESS_KEY")
     if not api_key:
         raise SystemExit("GDFL_ACCESS_KEY is not set (.env or environment).")
