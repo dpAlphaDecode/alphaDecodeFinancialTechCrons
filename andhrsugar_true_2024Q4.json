@@ -1,0 +1,1836 @@
+{
+  "PNL_true_2024Q4_Standalone": {
+    "request": {
+      "path": "/GetFinancialResults",
+      "params": {
+        "exchange": "BSE",
+        "instrument_identifier": "ANDHRSUGAR",
+        "year": 2025,
+        "nature_of_report": "Standalone",
+        "type": "ProfitLoss",
+        "period": "QM"
+      }
+    },
+    "response": {
+      "Value": [
+        {
+          "Label": "ScripCode",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "590062",
+          "Description": "Scrip code",
+          "Key": "ScripCode"
+        },
+        {
+          "Label": "Symbol",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "ANDHRSUGAR",
+          "Description": "Symbol",
+          "Key": "Symbol"
+        },
+        {
+          "Label": "MSEISymbol",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "NOTLISTED",
+          "Description": "MSEI symbol",
+          "Key": "MSEISymbolMseiSymbol"
+        },
+        {
+          "Label": "ISIN",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "INE715B01021",
+          "Description": "ISIN",
+          "Key": "ISINIsin"
+        },
+        {
+          "Label": "NameOfTheCompany",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "THE ANDHRA SUGARS LIMITED",
+          "Description": "Name of the company",
+          "Key": "NameOfTheCompany"
+        },
+        {
+          "Label": "TypeOfCompany",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "Main Board",
+          "Description": "Type of company",
+          "Key": "TypeOfCompany"
+        },
+        {
+          "Label": "ClassOfSecurity",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "Equity",
+          "Description": "Class of security",
+          "Key": "ClassOfSecurity"
+        },
+        {
+          "Label": "DateOfStartOfFinancialYear",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "2025-04-01",
+          "Description": "Date of start of financial year",
+          "Key": "DateOfStartOfFinancialYear"
+        },
+        {
+          "Label": "DateOfEndOfFinancialYear",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "2026-03-31",
+          "Description": "Date of end of financial year",
+          "Key": "DateOfEndOfFinancialYear"
+        },
+        {
+          "Label": "DateOfBoardMeetingWhenFinancialResultsWereApproved",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "2026-05-30",
+          "Description": "Date of board meeting when financial results were approved",
+          "Key": "DateOfBoardMeetingWhenFinancialResultsWereApproved"
+        },
+        {
+          "Label": "DateOnWhichPriorIntimationOfTheMeetingForConsideringFinancialResultsWasInformedToTheExchange",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "2026-05-29",
+          "Description": "Date on which prior intimation of the meeting for considering financial results was informed to the exchange",
+          "Key": "DateOnWhichPriorIntimationOfTheMeetingForConsideringFinancialResultsWasInformedToTheExchange"
+        },
+        {
+          "Label": "DescriptionOfPresentationCurrency",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "INR",
+          "Description": "Description of presentation currency",
+          "Key": "DescriptionOfPresentationCurrency"
+        },
+        {
+          "Label": "LevelOfRounding",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "Lakhs",
+          "Description": "Level of rounding",
+          "Key": "LevelOfRounding"
+        },
+        {
+          "Label": "TypeOfReportingPeriod",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "Quarterly",
+          "Description": "Type of reporting period",
+          "Key": "TypeOfReportingPeriod"
+        },
+        {
+          "Label": "ReportingQuarter",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "Fourth quarter",
+          "Description": "Reporting quarter",
+          "Key": "ReportingQuarter"
+        },
+        {
+          "Label": "IsCompanyReportingMultisegmentOrSingleSegment",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "Multi segment",
+          "Description": "Is company reporting multi segment or single segment",
+          "Key": "IsCompanyReportingMultisegmentOrSingleSegmentIsCompanyReportingMultiSegmentOrSingleSegment"
+        },
+        {
+          "Label": "DateOfStartOfBoardMeeting",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "2026-05-30",
+          "Description": "Date of start of board meeting",
+          "Key": "DateOfStartOfBoardMeeting"
+        },
+        {
+          "Label": "StartTimeOfBoardMeeting",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "10:40:00",
+          "Description": "Start time of board meeting",
+          "Key": "StartTimeOfBoardMeeting"
+        },
+        {
+          "Label": "DateOfEndOfBoardMeeting",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "2026-05-30",
+          "Description": "Date of end of board meeting",
+          "Key": "DateOfEndOfBoardMeeting"
+        },
+        {
+          "Label": "EndTimeOfBoardMeeting",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "11:50:00",
+          "Description": "End time of board meeting",
+          "Key": "EndTimeOfBoardMeeting"
+        },
+        {
+          "Label": "WhetherCashFlowStatementIsApplicableOnCompany",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "true",
+          "Description": "Whether cash flow statement is applicable on company",
+          "Key": "WhetherCashFlowStatementIsApplicableOnCompany"
+        },
+        {
+          "Label": "TypeOfCashFlowStatement",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "Cash Flow Indirect",
+          "Description": "Type of cash flow statement",
+          "Key": "TypeOfCashFlowStatement"
+        },
+        {
+          "Label": "DeclarationOfUnmodifiedOpinionOrStatementOnImpactOfAuditQualification",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "Not applicable",
+          "Description": "Declaration of unmodified opinion or statement on impact of audit qualification",
+          "Key": "DeclarationOfUnmodifiedOpinionOrStatementOnImpactOfAuditQualification"
+        },
+        {
+          "Label": "WhetherTheCompanyHasAnyRelatedParty",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "false",
+          "Description": "Whether the company has any related party",
+          "Key": "WhetherTheCompanyHasAnyRelatedParty"
+        },
+        {
+          "Label": "WhetherTheCompanyHasEnteredIntoAnyRelatedPartyTransactionDuringThePeriod",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "false",
+          "Description": "Whether the company has entered into any related party transaction during the period",
+          "Key": "WhetherTheCompanyHasEnteredIntoAnyRelatedPartyTransactionDuringThePeriod"
+        },
+        {
+          "Label": "WeDeclareThatTheAcceptanceOfFixedDepositsByTheBanksOrNonBankingFinanceCompanyAreAtTheTermsUniformlyApplicableOrOfferedToAllShareholdersOrPublic",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "NA",
+          "Description": "We declare that the acceptance of Fixed Deposits by the Banks / Non-Banking Finance Company are at the terms uniformly applicable/offered to all shareholders/public",
+          "Key": "WeDeclareThatTheAcceptanceOfFixedDepositsByTheBanksOrNonBankingFinanceCompanyAreAtTheTermsUniformlyApplicableOrOfferedToAllShareholdersOrPublicWeDeclareThatTheAcceptanceOfFixedDepositsByTheBanksNonBankingFinanceCompanyAreAtTheTermsUniformlyApplicableOfferedToAllShareholdersPublic"
+        },
+        {
+          "Label": "WeDeclareThatTheScheduledCommercialBankAsPerRBICircularRBIDBR20151619Dated03March2016HasAllowedAdditionalInterestOfOnePerCentPerAnnumOverAndAboveTheRateOfInterestMentionedInTheScheduleOfInterestRatesOnSavings",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "NA",
+          "Description": "We declare that the scheduled commercial bank as per RBI circular RBI/DBR/2015-16/ 19 Dated March 03 2016 has allowed additional interest of one percent per annum over and above the rate of interest mentioned in the schedule of interest rates on savings",
+          "Key": "WeDeclareThatTheScheduledCommercialBankAsPerRBICircularRBIDBR20151619Dated03March2016HasAllowedAdditionalInterestOfOnePerCentPerAnnumOverAndAboveTheRateOfInterestMentionedInTheScheduleOfInterestRatesOnSavingsWeDeclareThatTheScheduledCommercialBankAsPerRbiCircularRbiDbr20151619DatedMarch032016HasAllowedAdditionalInterestOfOnePercentPerAnnumOverAndAboveTheRateOfInterestMentionedInTheScheduleOfInterestRatesOnSavings"
+        },
+        {
+          "Label": "WhetherTheUpdatedRelatedPartyTransactionsPolicyHasBeenUploadedOnTheWebsiteOfTheCompanyInComplianceWithRegulation23",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "false",
+          "Description": "Whether the updated related party transactions policy has been uploaded on the website of the company in compliance with Regulation 23",
+          "Key": "WhetherTheUpdatedRelatedPartyTransactionsPolicyHasBeenUploadedOnTheWebsiteOfTheCompanyInComplianceWithRegulation23"
+        },
+        {
+          "Label": "WhetherStatementOnDeviationOrVariationForProceedsOfPublicIssueOrRightIssueOrPreferentialIssueOrQIPEtcIsApplicableToTheCompanyForTheCurrentQuarter",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "false",
+          "Description": "Whether statement on Deviation / Variation for proceeds of Public Issue / Right Issue / Preferential Issue / QIP etc is applicable to the company for the current quarter",
+          "Key": "WhetherStatementOnDeviationOrVariationForProceedsOfPublicIssueOrRightIssueOrPreferentialIssueOrQIPEtcIsApplicableToTheCompanyForTheCurrentQuarterWhetherStatementOnDeviationVariationForProceedsOfPublicIssueRightIssuePreferentialIssueQipEtcIsApplicableToTheCompanyForTheCurrentQuarter"
+        },
+        {
+          "Label": "WhetherTheDisclosureForTheDefaultOnLoansAndDebtSecuritiesIsApplicableToTheEntity",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "false",
+          "Description": "Whether the disclosure for the default on loans and debt securities is applicable to the entity",
+          "Key": "WhetherTheDisclosureForTheDefaultOnLoansAndDebtSecuritiesIsApplicableToTheEntity"
+        },
+        {
+          "Label": "NoteForNonApplicabilityOfTheDisclosureForTheDefaultOnLoansAndDebtSecuritiesToTheEntity",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "NA",
+          "Description": "Note for non-applicability of the disclosure for the default on loans and debt securities to the entity",
+          "Key": "NoteForNonApplicabilityOfTheDisclosureForTheDefaultOnLoansAndDebtSecuritiesToTheEntity"
+        },
+        {
+          "Label": "DateOfStartOfReportingPeriod",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "2026-01-01",
+          "Description": "Date of start of reporting period",
+          "Key": "DateOfStartOfReportingPeriod"
+        },
+        {
+          "Label": "DateOfEndOfReportingPeriod",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "2026-03-31",
+          "Description": "Date of end of reporting period",
+          "Key": "DateOfEndOfReportingPeriod"
+        },
+        {
+          "Label": "WhetherResultsAreAuditedOrUnaudited",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "Audited",
+          "Description": "Whether results are audited or unaudited",
+          "Key": "WhetherResultsAreAuditedOrUnaudited"
+        },
+        {
+          "Label": "NatureOfReportStandaloneConsolidated",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "Standalone",
+          "Description": "Nature of report standalone consolidated",
+          "Key": "NatureOfReportStandaloneConsolidated"
+        },
+        {
+          "Label": "RevenueFromOperations",
+          "UnitId": "INR",
+          "Decimals": -4,
+          "Value": "3755390000",
+          "Description": "Revenue from operations",
+          "Key": "RevenueFromOperations"
+        },
+        {
+          "Label": "OtherIncome",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "71805000",
+          "Description": "Other income",
+          "Key": "OtherIncome"
+        },
+        {
+          "Label": "Income",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "3827195000",
+          "Description": "Total income",
+          "Key": "IncomeTotalIncome"
+        },
+        {
+          "Label": "CostOfMaterialsConsumed",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "1695399000",
+          "Description": "Cost of materials consumed",
+          "Key": "CostOfMaterialsConsumed"
+        },
+        {
+          "Label": "PurchasesOfStockInTrade",
+          "UnitId": "INR",
+          "Decimals": -5,
+          "Value": "0",
+          "Description": "Purchases of stock-in-trade",
+          "Key": "PurchasesOfStockInTrade"
+        },
+        {
+          "Label": "ChangesInInventoriesOfFinishedGoodsWorkInProgressAndStockInTrade",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "-95865000",
+          "Description": "Changes in inventories of finished goods work-in-progress and stock-in-trade",
+          "Key": "ChangesInInventoriesOfFinishedGoodsWorkInProgressAndStockInTrade"
+        },
+        {
+          "Label": "EmployeeBenefitExpense",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "320688000",
+          "Description": "Employee benefit expense",
+          "Key": "EmployeeBenefitExpense"
+        },
+        {
+          "Label": "FinanceCosts",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "5196000",
+          "Description": "Finance costs",
+          "Key": "FinanceCosts"
+        },
+        {
+          "Label": "DepreciationDepletionAndAmortisationExpense",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "201883000",
+          "Description": "Depreciation depletion and amortisation expense",
+          "Key": "DepreciationDepletionAndAmortisationExpense"
+        },
+        {
+          "Label": "OtherExpenses",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "1408273000",
+          "Description": "Other expenses Sum",
+          "Key": "OtherExpensesOtherExpensesSum"
+        },
+        {
+          "Label": "Expenses",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "3535574000",
+          "Description": "Total Expenses",
+          "Key": "ExpensesTotalExpenses"
+        },
+        {
+          "Label": "ProfitBeforeExceptionalItemsAndTax",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "291621000",
+          "Description": "Total profit before exceptional items and tax",
+          "Key": "ProfitBeforeExceptionalItemsAndTaxTotalProfitBeforeExceptionalItemsAndTax"
+        },
+        {
+          "Label": "ExceptionalItemsBeforeTax",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "-242724000",
+          "Description": "Exceptional items before tax",
+          "Key": "ExceptionalItemsBeforeTax"
+        },
+        {
+          "Label": "ProfitBeforeTax",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "48897000",
+          "Description": "Total profit before tax",
+          "Key": "ProfitBeforeTaxTotalProfitBeforeTax"
+        },
+        {
+          "Label": "CurrentTax",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "35997000",
+          "Description": "Current tax",
+          "Key": "CurrentTax"
+        },
+        {
+          "Label": "DeferredTax",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "-10225000",
+          "Description": "Deferred tax",
+          "Key": "DeferredTax"
+        },
+        {
+          "Label": "TaxExpense",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "25772000",
+          "Description": "Total tax expense",
+          "Key": "TaxExpenseTotalTaxExpense"
+        },
+        {
+          "Label": "NetMovementInRegulatoryDeferralAccountBalancesRelatedToProfitOrLossAndTheRelatedDeferredTaxMovement",
+          "UnitId": "INR",
+          "Decimals": -5,
+          "Value": "0",
+          "Description": "Net movement in regulatory deferral account balances related to profit or loss and the related deferred tax movement",
+          "Key": "NetMovementInRegulatoryDeferralAccountBalancesRelatedToProfitOrLossAndTheRelatedDeferredTaxMovement"
+        },
+        {
+          "Label": "ProfitLossForPeriodFromContinuingOperations",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "23125000",
+          "Description": "Net profit (loss) for period from continuing operations",
+          "Key": "ProfitLossForPeriodFromContinuingOperationsNetProfitLossForPeriodFromContinuingOperations"
+        },
+        {
+          "Label": "ProfitLossFromDiscontinuedOperationsBeforeTax",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "4381000",
+          "Description": "Profit (loss) from discontinued operations before tax",
+          "Key": "ProfitLossFromDiscontinuedOperationsBeforeTax"
+        },
+        {
+          "Label": "TaxExpenseOfDiscontinuedOperations",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "1176000",
+          "Description": "Tax expense of discontinued operations",
+          "Key": "TaxExpenseOfDiscontinuedOperations"
+        },
+        {
+          "Label": "ProfitLossFromDiscontinuedOperationsAfterTax",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "3205000",
+          "Description": "Net profit (loss) from discontinued operations after tax",
+          "Key": "ProfitLossFromDiscontinuedOperationsAfterTaxNetProfitLossFromDiscontinuedOperationsAfterTax"
+        },
+        {
+          "Label": "ShareOfProfitLossOfAssociatesAndJointVenturesAccountedForUsingEquityMethod",
+          "UnitId": "INR",
+          "Decimals": -5,
+          "Value": "0",
+          "Description": "Share of profit (loss) of associates and joint ventures accounted for using equity method",
+          "Key": "ShareOfProfitLossOfAssociatesAndJointVenturesAccountedForUsingEquityMethod"
+        },
+        {
+          "Label": "ProfitLossForPeriod",
+          "UnitId": "INR",
+          "Decimals": -4,
+          "Value": "26330000",
+          "Description": "Total profit (loss) for period",
+          "Key": "ProfitLossForPeriodTotalProfitLossForPeriod"
+        },
+        {
+          "Label": "OtherComprehensiveIncomeNetOfTaxes",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "64585000",
+          "Description": "Other comprehensive income net of taxes",
+          "Key": "OtherComprehensiveIncomeNetOfTaxes"
+        },
+        {
+          "Label": "ComprehensiveIncomeForThePeriod",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "90915000",
+          "Description": "Total comprehensive income for the period",
+          "Key": "ComprehensiveIncomeForThePeriodTotalComprehensiveIncomeForThePeriod"
+        },
+        {
+          "Label": "PaidUpValueOfEquityShareCapital",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "271101000",
+          "Description": "Paid-up equity share capital",
+          "Key": "PaidUpValueOfEquityShareCapitalPaidUpEquityShareCapital"
+        },
+        {
+          "Label": "FaceValueOfEquityShareCapital",
+          "UnitId": "INRPerShare",
+          "Decimals": 0,
+          "Value": "10",
+          "Description": "Face value of equity share capital",
+          "Key": "FaceValueOfEquityShareCapital"
+        },
+        {
+          "Label": "BasicEarningsLossPerShareFromContinuingOperations",
+          "UnitId": "INRPerShare",
+          "Decimals": 0,
+          "Value": "0.17",
+          "Description": "Basic earnings (loss) per share from continuing operations",
+          "Key": "BasicEarningsLossPerShareFromContinuingOperations"
+        },
+        {
+          "Label": "DilutedEarningsLossPerShareFromContinuingOperations",
+          "UnitId": "INRPerShare",
+          "Decimals": 0,
+          "Value": "0.17",
+          "Description": "Diluted earnings (loss) per share from continuing operations",
+          "Key": "DilutedEarningsLossPerShareFromContinuingOperations"
+        },
+        {
+          "Label": "BasicEarningsLossPerShareFromDiscontinuedOperations",
+          "UnitId": "INRPerShare",
+          "Decimals": 0,
+          "Value": "0.02",
+          "Description": "Basic earnings (loss) per share from discontinued operations",
+          "Key": "BasicEarningsLossPerShareFromDiscontinuedOperations"
+        },
+        {
+          "Label": "DilutedEarningsLossPerShareFromDiscontinuedOperations",
+          "UnitId": "INRPerShare",
+          "Decimals": 0,
+          "Value": "0.02",
+          "Description": "Diluted earnings (loss) per share from discontinued operations",
+          "Key": "DilutedEarningsLossPerShareFromDiscontinuedOperations"
+        },
+        {
+          "Label": "BasicEarningsLossPerShareFromContinuingAndDiscontinuedOperations",
+          "UnitId": "INRPerShare",
+          "Decimals": 0,
+          "Value": "0.19",
+          "Description": "Total basic earnings (loss) per share from continuing and discontinued operations",
+          "Key": "BasicEarningsLossPerShareFromContinuingAndDiscontinuedOperationsTotalBasicEarningsLossPerShareFromContinuingAndDiscontinuedOperations"
+        },
+        {
+          "Label": "DilutedEarningsLossPerShareFromContinuingAndDiscontinuedOperations",
+          "UnitId": "INRPerShare",
+          "Decimals": 0,
+          "Value": "0.19",
+          "Description": "Total diluted earnings (loss) per share from continuing and discontinued operations",
+          "Key": "DilutedEarningsLossPerShareFromContinuingAndDiscontinuedOperationsTotalDilutedEarningsLossPerShareFromContinuingAndDiscontinuedOperations"
+        },
+        {
+          "Label": "OtherExpenses",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "463195000",
+          "Description": "Other Expenses",
+          "Key": "OtherExpenses"
+        },
+        {
+          "Label": "OtherExpenses",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "945078000",
+          "Description": "Power and fuel",
+          "Key": "OtherExpensesPowerAndFuel"
+        },
+        {
+          "Label": "SegmentRevenue",
+          "UnitId": "INR",
+          "Decimals": -5,
+          "Value": "0",
+          "Description": "SUGAR",
+          "Key": "SegmentRevenueSugar"
+        },
+        {
+          "Label": "SegmentRevenue",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "2066517000",
+          "Description": "CHLOR-ALKALI",
+          "Key": "SegmentRevenueChlorAlkali"
+        },
+        {
+          "Label": "SegmentRevenue",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "1623000",
+          "Description": "POWER GENERATION",
+          "Key": "SegmentRevenuePowerGeneration"
+        },
+        {
+          "Label": "SegmentRevenue",
+          "UnitId": "INR",
+          "Decimals": -4,
+          "Value": "1634220000",
+          "Description": "INDUSTRIAL CHEMICALS",
+          "Key": "SegmentRevenueIndustrialChemicals"
+        },
+        {
+          "Label": "SegmentRevenue",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "250897000",
+          "Description": "UNALLOCATED",
+          "Key": "SegmentRevenueUnallocated"
+        },
+        {
+          "Label": "SegmentRevenue",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "3953257000",
+          "Description": "Segment revenue",
+          "Key": "SegmentRevenue"
+        },
+        {
+          "Label": "InterSegmentRevenue",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "197867000",
+          "Description": "Inter segment revenue",
+          "Key": "InterSegmentRevenue"
+        },
+        {
+          "Label": "SegmentRevenueFromOperations",
+          "UnitId": "INR",
+          "Decimals": -4,
+          "Value": "3755390000",
+          "Description": "Revenue from operations",
+          "Key": "SegmentRevenueFromOperationsRevenueFromOperations"
+        },
+        {
+          "Label": "SegmentProfitLossBeforeTaxAndFinanceCosts",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "-43392000",
+          "Description": "SUGAR",
+          "Key": "SegmentProfitLossBeforeTaxAndFinanceCostsSugar"
+        },
+        {
+          "Label": "SegmentProfitLossBeforeTaxAndFinanceCosts",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "-452000",
+          "Description": "CHLOR-ALKALI",
+          "Key": "SegmentProfitLossBeforeTaxAndFinanceCostsChlorAlkali"
+        },
+        {
+          "Label": "SegmentProfitLossBeforeTaxAndFinanceCosts",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "-20764000",
+          "Description": "POWER GENERATION",
+          "Key": "SegmentProfitLossBeforeTaxAndFinanceCostsPowerGeneration"
+        },
+        {
+          "Label": "SegmentProfitLossBeforeTaxAndFinanceCosts",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "67576000",
+          "Description": "INDUSTRIAL CHEMICALS",
+          "Key": "SegmentProfitLossBeforeTaxAndFinanceCostsIndustrialChemicals"
+        },
+        {
+          "Label": "SegmentProfitLossBeforeTaxAndFinanceCosts",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "51125000",
+          "Description": "UNALLOCATED",
+          "Key": "SegmentProfitLossBeforeTaxAndFinanceCostsUnallocated"
+        },
+        {
+          "Label": "SegmentProfitLossBeforeTaxAndFinanceCosts",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "54093000",
+          "Description": "Segment profit (loss) before tax and finance costs",
+          "Key": "SegmentProfitLossBeforeTaxAndFinanceCosts"
+        },
+        {
+          "Label": "SegmentFinanceCosts",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "5196000",
+          "Description": "Segment finance costs",
+          "Key": "SegmentFinanceCosts"
+        },
+        {
+          "Label": "OtherUnallocableExpenditureNetOffUnAllocableIncome",
+          "UnitId": "INR",
+          "Decimals": -5,
+          "Value": "0",
+          "Description": "Other un-allocable expenditure net off un-allocable income",
+          "Key": "OtherUnallocableExpenditureNetOffUnAllocableIncomeOtherUnAllocableExpenditureNetOffUnAllocableIncome"
+        },
+        {
+          "Label": "SegmentProfitBeforeTax",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "48897000",
+          "Description": "Profit before tax",
+          "Key": "SegmentProfitBeforeTaxProfitBeforeTax"
+        },
+        {
+          "Label": "SegmentAssets",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "320111000",
+          "Description": "SUGAR",
+          "Key": "SegmentAssetsSugar"
+        },
+        {
+          "Label": "SegmentAssets",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "8307031000",
+          "Description": "CHLOR-ALKALI",
+          "Key": "SegmentAssetsChlorAlkali"
+        },
+        {
+          "Label": "SegmentAssets",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "362328000",
+          "Description": "POWER GENERATION",
+          "Key": "SegmentAssetsPowerGeneration"
+        },
+        {
+          "Label": "SegmentAssets",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "2671568000",
+          "Description": "INDUSTRIAL CHEMICALS",
+          "Key": "SegmentAssetsIndustrialChemicals"
+        },
+        {
+          "Label": "SegmentAssets",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "5605516000",
+          "Description": "UNALLOCATED",
+          "Key": "SegmentAssetsUnallocated"
+        },
+        {
+          "Label": "SegmentAssets",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "17266554000",
+          "Description": "Segment assets",
+          "Key": "SegmentAssets"
+        },
+        {
+          "Label": "UnAllocableAssets",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "36951000",
+          "Description": "Un-allocable assets",
+          "Key": "UnAllocableAssets"
+        },
+        {
+          "Label": "NetSegmentAssets",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "17303505000",
+          "Description": "Net segment assets",
+          "Key": "NetSegmentAssets"
+        },
+        {
+          "Label": "SegmentLiabilities",
+          "UnitId": "INR",
+          "Decimals": -4,
+          "Value": "34620000",
+          "Description": "SUGAR",
+          "Key": "SegmentLiabilitiesSugar"
+        },
+        {
+          "Label": "SegmentLiabilities",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "1694812000",
+          "Description": "CHLOR-ALKALI",
+          "Key": "SegmentLiabilitiesChlorAlkali"
+        },
+        {
+          "Label": "SegmentLiabilities",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "22114000",
+          "Description": "POWER GENERATION",
+          "Key": "SegmentLiabilitiesPowerGeneration"
+        },
+        {
+          "Label": "SegmentLiabilities",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "146358000",
+          "Description": "INDUSTRIAL CHEMICALS",
+          "Key": "SegmentLiabilitiesIndustrialChemicals"
+        },
+        {
+          "Label": "SegmentLiabilities",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "1281011000",
+          "Description": "UNALLOCATED",
+          "Key": "SegmentLiabilitiesUnallocated"
+        },
+        {
+          "Label": "SegmentLiabilities",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "3178915000",
+          "Description": "Segment liabilities",
+          "Key": "SegmentLiabilities"
+        },
+        {
+          "Label": "UnAllocableLiabilities",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "10042000",
+          "Description": "Un-allocable liabilities",
+          "Key": "UnAllocableLiabilities"
+        },
+        {
+          "Label": "NetSegmentLiabilities",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "3188957000",
+          "Description": "Net segment liabilities",
+          "Key": "NetSegmentLiabilities"
+        },
+        {
+          "Label": "AmountOfItemThatWillNotBeReclassifiedToProfitAndLoss",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "70257000",
+          "Description": "Items that will not be reclassified to profit or loss ",
+          "Key": "AmountOfItemThatWillNotBeReclassifiedToProfitAndLossItemsThatWillNotBeReclassifiedToProfitOrLoss"
+        },
+        {
+          "Label": "AmountOfItemThatWillNotBeReclassifiedToProfitAndLoss",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "70257000",
+          "Description": "Amount of item that will not be reclassified to profit and loss",
+          "Key": "AmountOfItemThatWillNotBeReclassifiedToProfitAndLoss"
+        },
+        {
+          "Label": "XbrlUrl",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "https://globaldatafeeds.in/resources/Results/IFIndAs_590062_22082026140540.xml",
+          "Description": "XbrlUrl",
+          "Key": ""
+        }
+      ]
+    }
+  },
+  "PNL_true_2024Q4_Consolidated": {
+    "request": {
+      "path": "/GetFinancialResults",
+      "params": {
+        "exchange": "BSE",
+        "instrument_identifier": "ANDHRSUGAR",
+        "year": 2025,
+        "nature_of_report": "Consolidated",
+        "type": "ProfitLoss",
+        "period": "QM"
+      }
+    },
+    "response": {
+      "Value": [
+        {
+          "Label": "ScripCode",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "590062",
+          "Description": "Scrip code",
+          "Key": "ScripCode"
+        },
+        {
+          "Label": "Symbol",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "ANDHRSUGAR",
+          "Description": "Symbol",
+          "Key": "Symbol"
+        },
+        {
+          "Label": "MSEISymbol",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "NA",
+          "Description": "MSEI symbol",
+          "Key": "MSEISymbolMseiSymbol"
+        },
+        {
+          "Label": "ISIN",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "INE715B01021",
+          "Description": "ISIN",
+          "Key": "ISINIsin"
+        },
+        {
+          "Label": "NameOfTheCompany",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "THE ANDHRA SUGARS LIMITED",
+          "Description": "Name of the company",
+          "Key": "NameOfTheCompany"
+        },
+        {
+          "Label": "TypeOfCompany",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "Main Board",
+          "Description": "Type of company",
+          "Key": "TypeOfCompany"
+        },
+        {
+          "Label": "ClassOfSecurity",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "Equity",
+          "Description": "Class of security",
+          "Key": "ClassOfSecurity"
+        },
+        {
+          "Label": "DateOfStartOfFinancialYear",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "2025-04-01",
+          "Description": "Date of start of financial year",
+          "Key": "DateOfStartOfFinancialYear"
+        },
+        {
+          "Label": "DateOfEndOfFinancialYear",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "2026-03-31",
+          "Description": "Date of end of financial year",
+          "Key": "DateOfEndOfFinancialYear"
+        },
+        {
+          "Label": "DateOfBoardMeetingWhenFinancialResultsWereApproved",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "2026-05-30",
+          "Description": "Date of board meeting when financial results were approved",
+          "Key": "DateOfBoardMeetingWhenFinancialResultsWereApproved"
+        },
+        {
+          "Label": "DateOnWhichPriorIntimationOfTheMeetingForConsideringFinancialResultsWasInformedToTheExchange",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "2026-05-14",
+          "Description": "Date on which prior intimation of the meeting for considering financial results was informed to the exchange",
+          "Key": "DateOnWhichPriorIntimationOfTheMeetingForConsideringFinancialResultsWasInformedToTheExchange"
+        },
+        {
+          "Label": "DescriptionOfPresentationCurrency",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "INR",
+          "Description": "Description of presentation currency",
+          "Key": "DescriptionOfPresentationCurrency"
+        },
+        {
+          "Label": "LevelOfRounding",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "Lakhs",
+          "Description": "Level of rounding",
+          "Key": "LevelOfRounding"
+        },
+        {
+          "Label": "TypeOfReportingPeriod",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "Quarterly",
+          "Description": "Type of reporting period",
+          "Key": "TypeOfReportingPeriod"
+        },
+        {
+          "Label": "ReportingQuarter",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "Fourth quarter",
+          "Description": "Reporting quarter",
+          "Key": "ReportingQuarter"
+        },
+        {
+          "Label": "IsCompanyReportingMultisegmentOrSingleSegment",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "Multi segment",
+          "Description": "Is company reporting multi segment or single segment",
+          "Key": "IsCompanyReportingMultisegmentOrSingleSegmentIsCompanyReportingMultiSegmentOrSingleSegment"
+        },
+        {
+          "Label": "DateOfStartOfBoardMeeting",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "2026-05-30",
+          "Description": "Date of start of board meeting",
+          "Key": "DateOfStartOfBoardMeeting"
+        },
+        {
+          "Label": "StartTimeOfBoardMeeting",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "10:40:00",
+          "Description": "Start time of board meeting",
+          "Key": "StartTimeOfBoardMeeting"
+        },
+        {
+          "Label": "DateOfEndOfBoardMeeting",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "2026-05-30",
+          "Description": "Date of end of board meeting",
+          "Key": "DateOfEndOfBoardMeeting"
+        },
+        {
+          "Label": "EndTimeOfBoardMeeting",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "11:50:00",
+          "Description": "End time of board meeting",
+          "Key": "EndTimeOfBoardMeeting"
+        },
+        {
+          "Label": "WhetherCashFlowStatementIsApplicableOnCompany",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "true",
+          "Description": "Whether cash flow statement is applicable on company",
+          "Key": "WhetherCashFlowStatementIsApplicableOnCompany"
+        },
+        {
+          "Label": "TypeOfCashFlowStatement",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "Cash Flow Indirect",
+          "Description": "Type of cash flow statement",
+          "Key": "TypeOfCashFlowStatement"
+        },
+        {
+          "Label": "DeclarationOfUnmodifiedOpinionOrStatementOnImpactOfAuditQualification",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "Declaration of unmodified opinion",
+          "Description": "Declaration of unmodified opinion or statement on impact of audit qualification",
+          "Key": "DeclarationOfUnmodifiedOpinionOrStatementOnImpactOfAuditQualification"
+        },
+        {
+          "Label": "DateOfStartOfReportingPeriod",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "2026-01-01",
+          "Description": "Date of start of reporting period",
+          "Key": "DateOfStartOfReportingPeriod"
+        },
+        {
+          "Label": "DateOfEndOfReportingPeriod",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "2026-03-31",
+          "Description": "Date of end of reporting period",
+          "Key": "DateOfEndOfReportingPeriod"
+        },
+        {
+          "Label": "WhetherResultsAreAuditedOrUnaudited",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "Audited",
+          "Description": "Whether results are audited or unaudited",
+          "Key": "WhetherResultsAreAuditedOrUnaudited"
+        },
+        {
+          "Label": "NatureOfReportStandaloneConsolidated",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "Consolidated",
+          "Description": "Nature of report standalone consolidated",
+          "Key": "NatureOfReportStandaloneConsolidated"
+        },
+        {
+          "Label": "RevenueFromOperations",
+          "UnitId": "INR",
+          "Decimals": -4,
+          "Value": "6374080000",
+          "Description": "Revenue from operations",
+          "Key": "RevenueFromOperations"
+        },
+        {
+          "Label": "OtherIncome",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "79457000",
+          "Description": "Other income",
+          "Key": "OtherIncome"
+        },
+        {
+          "Label": "Income",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "6453537000",
+          "Description": "Total income",
+          "Key": "IncomeTotalIncome"
+        },
+        {
+          "Label": "CostOfMaterialsConsumed",
+          "UnitId": "INR",
+          "Decimals": -4,
+          "Value": "3588350000",
+          "Description": "Cost of materials consumed",
+          "Key": "CostOfMaterialsConsumed"
+        },
+        {
+          "Label": "PurchasesOfStockInTrade",
+          "UnitId": "INR",
+          "Decimals": -5,
+          "Value": "0",
+          "Description": "Purchases of stock-in-trade",
+          "Key": "PurchasesOfStockInTrade"
+        },
+        {
+          "Label": "ChangesInInventoriesOfFinishedGoodsWorkInProgressAndStockInTrade",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "165767000",
+          "Description": "Changes in inventories of finished goods work-in-progress and stock-in-trade",
+          "Key": "ChangesInInventoriesOfFinishedGoodsWorkInProgressAndStockInTrade"
+        },
+        {
+          "Label": "EmployeeBenefitExpense",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "442149000",
+          "Description": "Employee benefit expense",
+          "Key": "EmployeeBenefitExpense"
+        },
+        {
+          "Label": "FinanceCosts",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "5818000",
+          "Description": "Finance costs",
+          "Key": "FinanceCosts"
+        },
+        {
+          "Label": "DepreciationDepletionAndAmortisationExpense",
+          "UnitId": "INR",
+          "Decimals": -4,
+          "Value": "216290000",
+          "Description": "Depreciation depletion and amortisation expense",
+          "Key": "DepreciationDepletionAndAmortisationExpense"
+        },
+        {
+          "Label": "OtherExpenses",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "1702579000",
+          "Description": "Other expenses Sum",
+          "Key": "OtherExpensesOtherExpensesSum"
+        },
+        {
+          "Label": "Expenses",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "6120953000",
+          "Description": "Total Expenses",
+          "Key": "ExpensesTotalExpenses"
+        },
+        {
+          "Label": "ProfitBeforeExceptionalItemsAndTax",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "332584000",
+          "Description": "Total profit before exceptional items and tax",
+          "Key": "ProfitBeforeExceptionalItemsAndTaxTotalProfitBeforeExceptionalItemsAndTax"
+        },
+        {
+          "Label": "ExceptionalItemsBeforeTax",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "-242724000",
+          "Description": "Exceptional items before tax",
+          "Key": "ExceptionalItemsBeforeTax"
+        },
+        {
+          "Label": "ProfitBeforeTax",
+          "UnitId": "INR",
+          "Decimals": -4,
+          "Value": "89860000",
+          "Description": "Total profit before tax",
+          "Key": "ProfitBeforeTaxTotalProfitBeforeTax"
+        },
+        {
+          "Label": "CurrentTax",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "53027000",
+          "Description": "Current tax",
+          "Key": "CurrentTax"
+        },
+        {
+          "Label": "DeferredTax",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "-14463000",
+          "Description": "Deferred tax",
+          "Key": "DeferredTax"
+        },
+        {
+          "Label": "TaxExpense",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "38564000",
+          "Description": "Total tax expense",
+          "Key": "TaxExpenseTotalTaxExpense"
+        },
+        {
+          "Label": "NetMovementInRegulatoryDeferralAccountBalancesRelatedToProfitOrLossAndTheRelatedDeferredTaxMovement",
+          "UnitId": "INR",
+          "Decimals": -5,
+          "Value": "0",
+          "Description": "Net movement in regulatory deferral account balances related to profit or loss and the related deferred tax movement",
+          "Key": "NetMovementInRegulatoryDeferralAccountBalancesRelatedToProfitOrLossAndTheRelatedDeferredTaxMovement"
+        },
+        {
+          "Label": "ProfitLossForPeriodFromContinuingOperations",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "51296000",
+          "Description": "Net profit (loss) for period from continuing operations",
+          "Key": "ProfitLossForPeriodFromContinuingOperationsNetProfitLossForPeriodFromContinuingOperations"
+        },
+        {
+          "Label": "ProfitLossFromDiscontinuedOperationsBeforeTax",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "4381000",
+          "Description": "Profit (loss) from discontinued operations before tax",
+          "Key": "ProfitLossFromDiscontinuedOperationsBeforeTax"
+        },
+        {
+          "Label": "TaxExpenseOfDiscontinuedOperations",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "1176000",
+          "Description": "Tax expense of discontinued operations",
+          "Key": "TaxExpenseOfDiscontinuedOperations"
+        },
+        {
+          "Label": "ProfitLossFromDiscontinuedOperationsAfterTax",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "3205000",
+          "Description": "Net profit (loss) from discontinued operations after tax",
+          "Key": "ProfitLossFromDiscontinuedOperationsAfterTaxNetProfitLossFromDiscontinuedOperationsAfterTax"
+        },
+        {
+          "Label": "ShareOfProfitLossOfAssociatesAndJointVenturesAccountedForUsingEquityMethod",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "4709000",
+          "Description": "Share of profit (loss) of associates and joint ventures accounted for using equity method",
+          "Key": "ShareOfProfitLossOfAssociatesAndJointVenturesAccountedForUsingEquityMethod"
+        },
+        {
+          "Label": "ProfitLossForPeriod",
+          "UnitId": "INR",
+          "Decimals": -4,
+          "Value": "59210000",
+          "Description": "Total profit (loss) for period",
+          "Key": "ProfitLossForPeriodTotalProfitLossForPeriod"
+        },
+        {
+          "Label": "OtherComprehensiveIncomeNetOfTaxes",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "82053000",
+          "Description": "Other comprehensive income net of taxes",
+          "Key": "OtherComprehensiveIncomeNetOfTaxes"
+        },
+        {
+          "Label": "ComprehensiveIncomeForThePeriod",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "141263000",
+          "Description": "Total comprehensive income for the period",
+          "Key": "ComprehensiveIncomeForThePeriodTotalComprehensiveIncomeForThePeriod"
+        },
+        {
+          "Label": "ProfitOrLossAttributableToOwnersOfParent",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "46973000",
+          "Description": "Profit or loss attributable to owners of parent",
+          "Key": "ProfitOrLossAttributableToOwnersOfParent"
+        },
+        {
+          "Label": "ProfitOrLossAttributableToNonControllingInterests",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "12237000",
+          "Description": "Profit or loss attributable to non-controlling interests",
+          "Key": "ProfitOrLossAttributableToNonControllingInterests"
+        },
+        {
+          "Label": "ComprehensiveIncomeForThePeriodAttributableToOwnersOfParent",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "131444000",
+          "Description": "Total comprehensive income for the period attributable to owners of parent",
+          "Key": "ComprehensiveIncomeForThePeriodAttributableToOwnersOfParentTotalComprehensiveIncomeForThePeriodAttributableToOwnersOfParent"
+        },
+        {
+          "Label": "ComprehensiveIncomeForThePeriodAttributableToOwnersOfParentNonControllingInterests",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "9819000",
+          "Description": "Total comprehensive income for the period attributable to owners of parent non-controlling interests",
+          "Key": "ComprehensiveIncomeForThePeriodAttributableToOwnersOfParentNonControllingInterestsTotalComprehensiveIncomeForThePeriodAttributableToOwnersOfParentNonControllingInterests"
+        },
+        {
+          "Label": "PaidUpValueOfEquityShareCapital",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "271101000",
+          "Description": "Paid-up equity share capital",
+          "Key": "PaidUpValueOfEquityShareCapitalPaidUpEquityShareCapital"
+        },
+        {
+          "Label": "FaceValueOfEquityShareCapital",
+          "UnitId": "INRPerShare",
+          "Decimals": 0,
+          "Value": "2",
+          "Description": "Face value of equity share capital",
+          "Key": "FaceValueOfEquityShareCapital"
+        },
+        {
+          "Label": "BasicEarningsLossPerShareFromContinuingOperations",
+          "UnitId": "INRPerShare",
+          "Decimals": 0,
+          "Value": "0.32",
+          "Description": "Basic earnings (loss) per share from continuing operations",
+          "Key": "BasicEarningsLossPerShareFromContinuingOperations"
+        },
+        {
+          "Label": "DilutedEarningsLossPerShareFromContinuingOperations",
+          "UnitId": "INRPerShare",
+          "Decimals": 0,
+          "Value": "0.32",
+          "Description": "Diluted earnings (loss) per share from continuing operations",
+          "Key": "DilutedEarningsLossPerShareFromContinuingOperations"
+        },
+        {
+          "Label": "BasicEarningsLossPerShareFromDiscontinuedOperations",
+          "UnitId": "INRPerShare",
+          "Decimals": 0,
+          "Value": "0.03",
+          "Description": "Basic earnings (loss) per share from discontinued operations",
+          "Key": "BasicEarningsLossPerShareFromDiscontinuedOperations"
+        },
+        {
+          "Label": "DilutedEarningsLossPerShareFromDiscontinuedOperations",
+          "UnitId": "INRPerShare",
+          "Decimals": 0,
+          "Value": "0.03",
+          "Description": "Diluted earnings (loss) per share from discontinued operations",
+          "Key": "DilutedEarningsLossPerShareFromDiscontinuedOperations"
+        },
+        {
+          "Label": "BasicEarningsLossPerShareFromContinuingAndDiscontinuedOperations",
+          "UnitId": "INRPerShare",
+          "Decimals": 0,
+          "Value": "0.35",
+          "Description": "Total basic earnings (loss) per share from continuing and discontinued operations",
+          "Key": "BasicEarningsLossPerShareFromContinuingAndDiscontinuedOperationsTotalBasicEarningsLossPerShareFromContinuingAndDiscontinuedOperations"
+        },
+        {
+          "Label": "DilutedEarningsLossPerShareFromContinuingAndDiscontinuedOperations",
+          "UnitId": "INRPerShare",
+          "Decimals": 0,
+          "Value": "0.35",
+          "Description": "Total diluted earnings (loss) per share from continuing and discontinued operations",
+          "Key": "DilutedEarningsLossPerShareFromContinuingAndDiscontinuedOperationsTotalDilutedEarningsLossPerShareFromContinuingAndDiscontinuedOperations"
+        },
+        {
+          "Label": "DebtEquityRatio",
+          "UnitId": "pure",
+          "Decimals": 0,
+          "Value": "0",
+          "Description": "Debt equity ratio",
+          "Key": "DebtEquityRatio"
+        },
+        {
+          "Label": "DebtServiceCoverageRatio",
+          "UnitId": "pure",
+          "Decimals": 0,
+          "Value": "0.6791",
+          "Description": "Debt service coverage ratio",
+          "Key": "DebtServiceCoverageRatio"
+        },
+        {
+          "Label": "InterestServiceCoverageRatio",
+          "UnitId": "pure",
+          "Decimals": 0,
+          "Value": "0.4972",
+          "Description": "Interest service coverage ratio",
+          "Key": "InterestServiceCoverageRatio"
+        },
+        {
+          "Label": "DisclosureOfNotesOnFinancialResultsExplanatoryTextBlock",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "1.The financial results of the Company have been prepared in accordance with Indian Accounting Standards (Ind AS) as prescribed under section 133 of the Companies Act 2013 read with Companies (Indian Accouting Standard ) Rules, 2015 (as amended). &lt;BR&gt; 2.The figure for the quarter ended 31st March 2026 & 31st March 2025 are the balancing figure between audited figure in respect of full financial year and published unaudited year to date figures upto 3rd quarter of respective years. &lt;BR&gt;  3.During the Financial Year 2019-20, the Company (APL) has initiated the process of renewal of the Land Lease on which the plant is located with Visakhapatnam Port Authority (VPA) for a further period of 30 years with effect from 27.06.2019.  APL has submitted its Technical & Financial Bid against the tender floated by VPA. As APL was the sole bidder for the Tender, VPA accepted both Technical Bid & Financial Bid.  Later -on, VPA has cancelled the tender and issued re-tender.  Aggrieved by the action of VPA, APL has filed a writ petition under Article 226 before the Hon\u2019ble High Court of Andhra Pradesh. &lt;BR&gt;  The Hon\u2019ble High Court of Andhra Pradesh has allowed the writ Petition filed by the APL seeking the cancellation of the order dated 18.08.2020, cancelling the tender notification dated 07.08.2019 and fresh tender notification dated 24.08.2020 issued by VPA towards the lease of the land and directed VPA to execute the lease deed, vide its order dated 25th February 2022. Further, on 19th March 2022, APL has written a letter to the Chief Engineer, VPA requesting him to kindly finalise the land lease deed and fix-up the date for execution of the said lease deed.  VPA has preferred an appeal against the Hon\u2019ble High Court of Andhra Pradesh Order dated 25.02.2022 before division bench of Hon\u2019ble High Court of Andhra Pradesh and the Hon'ble High Court has delivered its Judgement on 03.11.2025.  Based on the Judgement, APL has addressed a letter to VPA for issue of tender as per Land Lease Policy guidelines 2015. &lt;BR&gt;  Pending execution of the lease deed, APL has considered provisionally its bid amount for accounting of \u201cLeases\u201d  in accordance with Ind AS 116, till the lease deed is executed. &lt;BR&gt;  4.The exceptional items for the year ended  31st March 2026 of Rs.2559.78 lakhs includes the following : &lt;BR&gt;  a)An expense of  Rs.330.25 Lakhs towards provision for Impairment at Sugar Unit - Bhimadole (recognised during the three months period ended 31.03.2026).  &lt;BR&gt;  b)An expense of Rs.2097.03 Lakhs towards payment on account of FPPCA charges demand raised by DISCOMS for the FY 2022-23, (recognised during the three months period ended 31.03.2026).  &lt;BR&gt;  c)An expense of Rs. 440.16 lakhs paid  towards Voluntary Retirement Scheme (VRS) for the employees in Sugar Units and cogeneration unit at Taduvai.  &lt;BR&gt;  d)An Income of Rs. 307.66  lakhs towards  True Down adjustment arising from \"True up of Fuel and Power Purchase Cost Adjustment (FPPCA) order\" for the FY 2024-25. &lt;BR&gt;  5.Holding Company (ASL) during this year the Company has discontinued the operations of the Sugar Unit and Power Generation Unit situated at Tanuku  and the Wind Power unit situated at Ramagiri.  &lt;BR&gt;  6.The  Parent company  has recommended payment of final dividend of Rs.1.20/-  (i.e 60%-Normal 50% and Special 10%) per equity share of the face value of Rs.2/- each for the Financial Year ended 31st March 2026. &lt;BR&gt;  7.The above results of the Company have been reviewed by  the Audit Committee at the meeting held on 29.05.2026 and approved by the Board of Directors at the meeting held on 30.05.2026. &lt;BR&gt;  8.Previous period figures have been regrouped wherever necessary to conform to the current period presentation.",
+          "Description": "Disclosure of notes on financial results explanatory ",
+          "Key": "DisclosureOfNotesOnFinancialResultsExplanatoryTextBlockDisclosureOfNotesOnFinancialResultsExplanatory"
+        },
+        {
+          "Label": "OtherExpenses",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "1031166000",
+          "Description": "power and fuel",
+          "Key": "OtherExpensesPowerAndFuel"
+        },
+        {
+          "Label": "OtherExpenses",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "671413000",
+          "Description": "Other Expenses",
+          "Key": "OtherExpenses"
+        },
+        {
+          "Label": "SegmentRevenue",
+          "UnitId": "INR",
+          "Decimals": -5,
+          "Value": "0",
+          "Description": "SUGAR",
+          "Key": "SegmentRevenueSugar"
+        },
+        {
+          "Label": "SegmentRevenue",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "2066517000",
+          "Description": "CHLOR-ALKALI",
+          "Key": "SegmentRevenueChlorAlkali"
+        },
+        {
+          "Label": "SegmentRevenue",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "80445000",
+          "Description": "POWER GENERATION",
+          "Key": "SegmentRevenuePowerGeneration"
+        },
+        {
+          "Label": "SegmentRevenue",
+          "UnitId": "INR",
+          "Decimals": -4,
+          "Value": "3376190000",
+          "Description": "INDUTRIAL CHEMICALS",
+          "Key": "SegmentRevenueIndutrialChemicals"
+        },
+        {
+          "Label": "SegmentRevenue",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "1780104000",
+          "Description": "SOAP",
+          "Key": "SegmentRevenueSoap"
+        },
+        {
+          "Label": "SegmentRevenue",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "250897000",
+          "Description": "UNALLOCATED",
+          "Key": "SegmentRevenueUnallocated"
+        },
+        {
+          "Label": "SegmentRevenue",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "7554153000",
+          "Description": "Segment revenue",
+          "Key": "SegmentRevenue"
+        },
+        {
+          "Label": "InterSegmentRevenue",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "1180073000",
+          "Description": "Inter segment revenue",
+          "Key": "InterSegmentRevenue"
+        },
+        {
+          "Label": "SegmentRevenueFromOperations",
+          "UnitId": "INR",
+          "Decimals": -4,
+          "Value": "6374080000",
+          "Description": "Revenue from operations",
+          "Key": "SegmentRevenueFromOperationsRevenueFromOperations"
+        },
+        {
+          "Label": "SegmentProfitLossBeforeTaxAndFinanceCosts",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "-43392000",
+          "Description": "SUGAR",
+          "Key": "SegmentProfitLossBeforeTaxAndFinanceCostsSugar"
+        },
+        {
+          "Label": "SegmentProfitLossBeforeTaxAndFinanceCosts",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "-452000",
+          "Description": "CHLOR-ALKALI",
+          "Key": "SegmentProfitLossBeforeTaxAndFinanceCostsChlorAlkali"
+        },
+        {
+          "Label": "SegmentProfitLossBeforeTaxAndFinanceCosts",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "-25736000",
+          "Description": "POWER GENERATION",
+          "Key": "SegmentProfitLossBeforeTaxAndFinanceCostsPowerGeneration"
+        },
+        {
+          "Label": "SegmentProfitLossBeforeTaxAndFinanceCosts",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "130209000",
+          "Description": "INDUTRIAL CHEMICALS",
+          "Key": "SegmentProfitLossBeforeTaxAndFinanceCostsIndutrialChemicals"
+        },
+        {
+          "Label": "SegmentProfitLossBeforeTaxAndFinanceCosts",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "42067000",
+          "Description": "SOAP",
+          "Key": "SegmentProfitLossBeforeTaxAndFinanceCostsSoap"
+        },
+        {
+          "Label": "SegmentProfitLossBeforeTaxAndFinanceCosts",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "2071000",
+          "Description": "UNALLOCATED",
+          "Key": "SegmentProfitLossBeforeTaxAndFinanceCostsUnallocated"
+        },
+        {
+          "Label": "SegmentProfitLossBeforeTaxAndFinanceCosts",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "104767000",
+          "Description": "Segment profit (loss) before tax and finance costs",
+          "Key": "SegmentProfitLossBeforeTaxAndFinanceCosts"
+        },
+        {
+          "Label": "SegmentFinanceCosts",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "5818000",
+          "Description": "Segment finance costs",
+          "Key": "SegmentFinanceCosts"
+        },
+        {
+          "Label": "OtherUnallocableExpenditureNetOffUnAllocableIncome",
+          "UnitId": "INR",
+          "Decimals": -5,
+          "Value": "0",
+          "Description": "Other un-allocable expenditure net off un-allocable income",
+          "Key": "OtherUnallocableExpenditureNetOffUnAllocableIncomeOtherUnAllocableExpenditureNetOffUnAllocableIncome"
+        },
+        {
+          "Label": "SegmentProfitBeforeTax",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "98949000",
+          "Description": "Profit before tax",
+          "Key": "SegmentProfitBeforeTaxProfitBeforeTax"
+        },
+        {
+          "Label": "SegmentAssets",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "320111000",
+          "Description": "SUGAR",
+          "Key": "SegmentAssetsSugar"
+        },
+        {
+          "Label": "SegmentAssets",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "8288144000",
+          "Description": "CHLOR-ALKALI",
+          "Key": "SegmentAssetsChlorAlkali"
+        },
+        {
+          "Label": "SegmentAssets",
+          "UnitId": "INR",
+          "Decimals": -4,
+          "Value": "498610000",
+          "Description": "POWER GENERATION",
+          "Key": "SegmentAssetsPowerGeneration"
+        },
+        {
+          "Label": "SegmentAssets",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "3835271000",
+          "Description": "INDUTRIAL CHEMICALS",
+          "Key": "SegmentAssetsIndutrialChemicals"
+        },
+        {
+          "Label": "SegmentAssets",
+          "UnitId": "INR",
+          "Decimals": -5,
+          "Value": "797000000",
+          "Description": "SOAP",
+          "Key": "SegmentAssetsSoap"
+        },
+        {
+          "Label": "SegmentAssets",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "8002857000",
+          "Description": "UNALLOCATED",
+          "Key": "SegmentAssetsUnallocated"
+        },
+        {
+          "Label": "SegmentAssets",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "21741993000",
+          "Description": "Segment assets",
+          "Key": "SegmentAssets"
+        },
+        {
+          "Label": "UnAllocableAssets",
+          "UnitId": "INR",
+          "Decimals": -5,
+          "Value": "0",
+          "Description": "Un-allocable assets",
+          "Key": "UnAllocableAssets"
+        },
+        {
+          "Label": "NetSegmentAssets",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "21741993000",
+          "Description": "Net segment assets",
+          "Key": "NetSegmentAssets"
+        },
+        {
+          "Label": "SegmentLiabilities",
+          "UnitId": "INR",
+          "Decimals": -4,
+          "Value": "34620000",
+          "Description": "SUGAR",
+          "Key": "SegmentLiabilitiesSugar"
+        },
+        {
+          "Label": "SegmentLiabilities",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "1694812000",
+          "Description": "CHLOR-ALKALI",
+          "Key": "SegmentLiabilitiesChlorAlkali"
+        },
+        {
+          "Label": "SegmentLiabilities",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "52373000",
+          "Description": "POWER GENERATION",
+          "Key": "SegmentLiabilitiesPowerGeneration"
+        },
+        {
+          "Label": "SegmentLiabilities",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "849114000",
+          "Description": "INDUTRIAL CHEMICALS",
+          "Key": "SegmentLiabilitiesIndutrialChemicals"
+        },
+        {
+          "Label": "SegmentLiabilities",
+          "UnitId": "INR",
+          "Decimals": -4,
+          "Value": "68630000",
+          "Description": "SOAP",
+          "Key": "SegmentLiabilitiesSoap"
+        },
+        {
+          "Label": "SegmentLiabilities",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "1334248000",
+          "Description": "UNALLOCATED",
+          "Key": "SegmentLiabilitiesUnallocated"
+        },
+        {
+          "Label": "SegmentLiabilities",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "4033797000",
+          "Description": "Segment liabilities",
+          "Key": "SegmentLiabilities"
+        },
+        {
+          "Label": "UnAllocableLiabilities",
+          "UnitId": "INR",
+          "Decimals": -5,
+          "Value": "0",
+          "Description": "Un-allocable liabilities",
+          "Key": "UnAllocableLiabilities"
+        },
+        {
+          "Label": "NetSegmentLiabilities",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "4033797000",
+          "Description": "Net segment liabilities",
+          "Key": "NetSegmentLiabilities"
+        },
+        {
+          "Label": "AmountOfItemThatWillNotBeReclassifiedToProfitAndLoss",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "87725000",
+          "Description": "Items that will not be reclassified to profit or loss",
+          "Key": "AmountOfItemThatWillNotBeReclassifiedToProfitAndLossItemsThatWillNotBeReclassifiedToProfitOrLoss"
+        },
+        {
+          "Label": "AmountOfItemThatWillNotBeReclassifiedToProfitAndLoss",
+          "UnitId": "INR",
+          "Decimals": -3,
+          "Value": "87725000",
+          "Description": "Amount of item that will not be reclassified to profit and loss",
+          "Key": "AmountOfItemThatWillNotBeReclassifiedToProfitAndLoss"
+        },
+        {
+          "Label": "WhetherResultsAreAuditedOrUnauditedForImpactOfAuditQualification",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "Audited",
+          "Description": "Whether results are Audited or Unaudited for impact of audit qualification",
+          "Key": "WhetherResultsAreAuditedOrUnauditedForImpactOfAuditQualification"
+        },
+        {
+          "Label": "DeclarationPursuantToClauseDOfSubRegulation3OfRegulation33OfSEBILODRRegulation2015",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "true",
+          "Description": "Declaration pursuant to Regulation 33(3)(d) of SEBI (LODR) Regulation 2015",
+          "Key": "DeclarationPursuantToClauseDOfSubRegulation3OfRegulation33OfSEBILODRRegulation2015DeclarationPursuantToRegulation333DOfSebiLodrRegulation2015"
+        },
+        {
+          "Label": "AuditorsFirmName",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "BRAHMAYYA & CO",
+          "Description": "Auditor`s firm name",
+          "Key": "AuditorsFirmNameAuditorSFirmName"
+        },
+        {
+          "Label": "WhetherTheFirmHoldsAValidPeerReviewCertificateIssuedByPeerReviewBoardOfICAI",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "true",
+          "Description": "Whether the firm holds a valid peer review certificate issued by peer review board of ICAI",
+          "Key": "WhetherTheFirmHoldsAValidPeerReviewCertificateIssuedByPeerReviewBoardOfICAIWhetherTheFirmHoldsAValidPeerReviewCertificateIssuedByPeerReviewBoardOfIcai"
+        },
+        {
+          "Label": "ValidityDateOfCertificate",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "2028-02-29",
+          "Description": "Validity date of certificate",
+          "Key": "ValidityDateOfCertificate"
+        },
+        {
+          "Label": "XbrlUrl",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "https://www.bseindia.com/XBRLFILES/IFIndasDuplicateUploadDocument/Integrated_Finance_Ind_As_590062_30052026073204_IFIndAs.xml",
+          "Description": "XbrlUrl",
+          "Key": "XbrlUrl"
+        },
+        {
+          "Label": "ReceivedAt",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "",
+          "Description": "Received At DateTime",
+          "Key": "ReceivedAt"
+        },
+        {
+          "Label": "SavedAt",
+          "UnitId": "",
+          "Decimals": 0,
+          "Value": "2026-8-23 21:17:30",
+          "Description": "Saved At DateTim",
+          "Key": "SavedAt"
+        }
+      ]
+    }
+  }
+}

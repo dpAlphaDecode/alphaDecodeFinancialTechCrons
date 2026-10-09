@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, Date, Numeric, BigInteger, DateTime, ForeignKey, func
-from app.db.base import Base
+from db.base import Base
 
 class PriceSnapshotNew(Base):
     __tablename__ = "price_snapshots_new"

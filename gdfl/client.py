@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import collections
 import datetime as _dt
+import json
 import logging
 import os
 import threading
@@ -54,7 +55,18 @@ MAX_RATE_LIMIT_RETRIES = 2
 # been seen to vary.
 def _is_hourly_rate_limit_response(text: str) -> bool:
     lowered = (text or "").lower()
-    return "hour" in lowered and "limit" in lowered
+    if "hour" not in lowered or "limit" not in lowered:
+        return False
+    # Real GDFL hourly-cap responses are plain text, not JSON (see module
+    # docstring). A body that parses as JSON is genuine financial data --
+    # e.g. a company name containing "...Limited" plus free-text notes
+    # mentioning "business hour" innocently contain both substrings -- so
+    # only a non-JSON body counts as an actual rate-limit hit.
+    try:
+        json.loads(text)
+    except (ValueError, TypeError):
+        return True
+    return False
 
 
 def _seconds_until_next_hour(buffer_seconds: float = 5.0) -> float:

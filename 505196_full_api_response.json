@@ -1,0 +1,348 @@
+{
+  "ProfitLoss": {
+    "2021": {
+      "M12": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      },
+      "QJ": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      },
+      "QS": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      },
+      "QD": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      },
+      "QM": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      }
+    },
+    "2022": {
+      "M12": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      },
+      "QJ": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      },
+      "QS": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      },
+      "QD": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      },
+      "QM": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      }
+    },
+    "2023": {
+      "M12": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      },
+      "QJ": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      },
+      "QS": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      },
+      "QD": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      },
+      "QM": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      }
+    },
+    "2024": {
+      "M12": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      },
+      "QJ": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      },
+      "QS": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      },
+      "QD": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      },
+      "QM": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      }
+    },
+    "2025": {
+      "M12": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      },
+      "QJ": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      },
+      "QS": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      },
+      "QD": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      },
+      "QM": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      }
+    },
+    "2026": {
+      "QJ": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      }
+    }
+  },
+  "BalanceSheet": {
+    "2021": {
+      "M12": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      }
+    },
+    "2022": {
+      "M12": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      }
+    },
+    "2023": {
+      "M12": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      }
+    },
+    "2024": {
+      "M12": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      }
+    },
+    "2025": {
+      "M12": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      }
+    },
+    "2026": {
+      "QJ": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      }
+    }
+  },
+  "CashFlow": {
+    "2021": {
+      "M12": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      }
+    },
+    "2022": {
+      "M12": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      }
+    },
+    "2023": {
+      "M12": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      }
+    },
+    "2024": {
+      "M12": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      }
+    },
+    "2025": {
+      "M12": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      }
+    },
+    "2026": {
+      "QJ": {
+        "Consolidated": {
+          "Value": []
+        },
+        "Standalone": {
+          "Value": []
+        }
+      }
+    }
+  }
+}
